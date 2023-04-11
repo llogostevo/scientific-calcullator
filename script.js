@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("Document is Ready");
 
     function evaluate(calculation){
-        display.value = eval(calculation)
+        result = eval(calculation);
+        display.value = result;
     }
 
     const display = document.getElementById('calc-display');
@@ -27,34 +28,32 @@ document.addEventListener("DOMContentLoaded", function() {
         
         buttons[i].addEventListener('click', () => {
             let keyPressed = buttons[i].innerText;
-            let value = display.value;
             console.log(keyPressed);
-            console.log(value);
 
+            if (keyPressed == NaN){
+                console.log ('not num true')
+                display.value="";
+            } 
 
             if (keyPressed == '='){
                 evaluate(calculation);
                 calculation="";
             } else if (keyPressed == 'x') {
                 keyPressed = '*'
-                value = keyPressed;
                 calculation+=keyPressed;
-                display.value = value;
+                display.value = keyPressed;
             } else if (keyPressed == '÷') {
                 keyPressed = '/'
-                value = keyPressed;
                 calculation+=keyPressed;
-                display.value = value;
+                display.value = '÷';
             } else if (keyPressed == '%') {
                 keyPressed = '*0.01' 
-                value = keyPressed;
                 calculation+=keyPressed;
-                display.value = value;
+                display.value = '%';
             } else if (keyPressed == 'AC') {
                 calculation="";
                 keyPressed= "";
-                value = "";
-                display.value = value;
+                display.value = keyPressed;
             } else if (keyPressed == 'Inv') {
                 // NEEDS REFINING< NEED TO KEEP RUNNING TOTAL ON DISPLAY AFTER EACH NUMBER PRESS
                 keyPressed = `math.inv(${value})` 
@@ -63,24 +62,22 @@ document.addEventListener("DOMContentLoaded", function() {
                 display.value = value;
             } else if (keyPressed == 'RAD') {
                 keyPressed = `${value} * Math.PI / 180`
-                value = keyPressed;
                 calculation+=keyPressed;
-                display.value = value;
+                display.value = 'RAD';
             }  else if (keyPressed == 'DEG') {
                 keyPressed = `${value} * 180 / Math.PI`; 
                 value = keyPressed;
                 calculation+=keyPressed;
-                display.value = value;
+                display.value = 'DEG';
             } else if (keyPressed == 'x!') {
-                keyPressed = `math.factorial(${value})` 
+                keyPressed = `Math.factorial(${value})` 
                 value = `${value}!`;
                 calculation+=keyPressed;
                 display.value = value;
             }  else if (keyPressed == 'sin') {
                 keyPressed = `Math.sin(${value})`
-                value = keyPressed;
                 calculation+=keyPressed;
-                display.value = keyPressed;
+                display.value = `sin(${value})`;
                 // NOT SURE WHAT THIS IS??? LN
             } else if (keyPressed =='ln') {
                 keyPressed = 'Math.LOG10E' 
@@ -131,11 +128,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 display.value = value;
                 calculation+=value;
                 console.log('calculation:', calculation)
-            } else if (!(keyPressed >=0 && keyPressed <=9)){
+            } else if (keyPressed == NaN){
                 value="";
+                console.log("not number");
             } 
-            
-            
             
 
         })
