@@ -3,7 +3,13 @@ need to
 
 - alter buttons layout so numbers are showing in calculator format
 
-- implement solution to put in the scientific keys
+- implement solution to put in the scientific keys 
+ - check key entered, if scientific run the scientific function, if non scientific run the normal function
+ - check type of scientific key, some will be added to the calc, some will be 
+
+ - implement solution for open brackets
+    - if ( placed after a number, then put in * between them
+    - if no ) bracket
 
 - hide scientific keys when reached smaller breakpoint
     - use button to show scientific keys
