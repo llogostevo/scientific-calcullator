@@ -1,14 +1,23 @@
 /*
 need to
 
+- alter buttons layout so numbers are showing in calculator format
+
 - implement solution to put in the scientific keys
 
+- hide scientific keys when reached smaller breakpoint
+    - use button to show scientific keys
 
-BUGS FIXED
+
+FIXED
 - simple calculations not working, 
  1- need to allow several numbers to display and then be used in a calculation
  2- currently calculation is returning a long concatenated string
-
+- edit displays to align right values
+- edit smaller display to have no border
+- smaller display should show numbers when updating the calculator
+    - smaller display to show numbers e.g. 2 entered twice needs to show 22 in smaller
+        - could be done by updating calc only after the check
 */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -21,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const calcButtons = document.querySelectorAll('.calculator')
     const sciButtons = document.querySelectorAll('.sci-calculator')
-    // set variable on first page load;
+    // set variable on first page load
+    // this tracks the text being inputted for the calculation
     let calculation="";
 
     // Listen for regular calculator button press
@@ -48,9 +58,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 /*
                     REFACTOR OPPORTUNITY:
                      - pull out into a seperate function and incorporate with the other display function
+                   
                 */
                 // update the calculation variable with the button data entry
-                calculation+=button;
+                
                 // store the displa of the calculator in variable
                 let currentDisplay = document.getElementById('calc-display');
                 // check if the calculator is displaying a number
@@ -65,11 +76,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     console.log("calc: ", calculation)
                     // display the button pressed in the calculator
                     screenDisplay(button);
+                    calculation+=button;
                     // display the current calculation in the smaller display
                     calcTrackDisplay(calculation);
                 } else {
                     // used to ensure numbers are increased in display instead of being wiped
                     currentDisplay.value = currentDisplay.value + button;
+                    calculation+=button;
+                    calcTrackDisplay(calculation);
                 }
                 
             }
