@@ -2,8 +2,11 @@
 need to
 
 - alter buttons layout so numbers are showing in calculator format
+ - work until use the show hide for the buttons so need to lay them out into rows and columns
 
-- implement solution to put in the scientific keys 
+
+
+
  - check key entered, if scientific run the scientific function, if non scientific run the normal function
  - check type of scientific key, some will be added to the calc, some will be 
 
@@ -24,6 +27,7 @@ FIXED
 - smaller display should show numbers when updating the calculator
     - smaller display to show numbers e.g. 2 entered twice needs to show 22 in smaller
         - could be done by updating calc only after the check
+- implement solution to put in the scientific keys 
 */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -34,8 +38,19 @@ document.addEventListener("DOMContentLoaded", function() {
     //     display.value = result;
     // }
 
-    const calcButtons = document.querySelectorAll('.calculator')
-    const sciButtons = document.querySelectorAll('.sci-calculator')
+    const calcButtons = document.querySelectorAll('.calculator');
+    const sciButtons = document.querySelectorAll('.sci-calculator');
+    const modeButtons = document.querySelectorAll('.mode-button');
+
+
+    // VARIABLES TO SHOW AND HIDE THE SCI CALCULATOR BUTTONS
+    const sciCalc = document.getElementById("sci-calc");
+    const calc = document.getElementById("calc");
+    // hide the sci calculator on load of page
+    sciCalc.style.display = "none";
+
+
+
     // set variable on first page load
     // this tracks the text being inputted for the calculation
     let calculation="";
@@ -56,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 screenDisplay(result);
                 calculation = result;
                 calcTrackDisplay(calculation);
-            } else if (button == "AC") {
+            } else if (buttonText == "AC") {
                 calculation="";
                 screenDisplay("");
                 calcTrackDisplay(calculation);
@@ -96,7 +111,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
         });
     });
+
     
+
+    modeButtons.forEach(button => {
+        button.addEventListener('click', function(event){
+            // store the text content into the variable text
+            const buttonText = event.target.innerText;
+            
+            if (buttonText == "Fx"){
+                console.log("sci-mode");
+                calc.style.display = "none";
+                sciCalc.style.display = "block";
+
+            } else if (buttonText == "123") {
+                console.log("calcMode")
+                calc.style.display = "block";
+                sciCalc.style.display = "none";
+
+
+            }
+
+
+    });    
+});
+
 });
 
 // Used to carry out the calculation
