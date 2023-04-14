@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const sciCalc = document.getElementById("sci-calc");
     const calc = document.getElementById("calc");
     // hide the sci calculator on load of page
-    sciCalc.style.display = "none";
 
 
 
@@ -112,7 +111,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    
+// THIS ISNT WORKING
+    sciCalc.addEventListener('click', function(event){
+        sciCalc.style.backgroundColor = "#F0F8FF";
+        sciCalc.style.color = "#0d6efd";
+    });
+
 
     modeButtons.forEach(button => {
         button.addEventListener('click', function(event){
@@ -121,14 +125,14 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if (buttonText == "Fx"){
                 console.log("sci-mode");
-                calc.style.display = "none";
-                sciCalc.style.display = "block";
+                calc.classList.add("d-none");
+                sciCalc.classList.remove("d-none");
+
 
             } else if (buttonText == "123") {
                 console.log("calcMode")
-                calc.style.display = "block";
-                sciCalc.style.display = "none";
-
+                calc.classList.remove("d-none");
+                sciCalc.classList.add("d-none");
 
             }
 
