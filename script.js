@@ -1,11 +1,6 @@
 /*
 need to
 
-- alter buttons layout so numbers are showing in calculator format
- - work until use the show hide for the buttons so need to lay them out into rows and columns
-
-
-
 
  - check key entered, if scientific run the scientific function, if non scientific run the normal function
  - check type of scientific key, some will be added to the calc, some will be 
@@ -14,8 +9,8 @@ need to
     - if ( placed after a number, then put in * between them
     - if no ) bracket
 
-- hide scientific keys when reached smaller breakpoint
-    - use button to show scientific keys
+- hide scientific keys when reached smaller breakpoint but show at larger breakpoint
+- restrict size of app at larger breakpoint
 
 
 FIXED
@@ -28,6 +23,8 @@ FIXED
     - smaller display to show numbers e.g. 2 entered twice needs to show 22 in smaller
         - could be done by updating calc only after the check
 - implement solution to put in the scientific keys 
+    - use button to show scientific keys
+
 */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -46,7 +43,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // VARIABLES TO SHOW AND HIDE THE SCI CALCULATOR BUTTONS
     const sciCalc = document.getElementById("sci-calc");
     const calc = document.getElementById("calc");
-    // hide the sci calculator on load of page
+
+    
 
 
 
@@ -111,34 +109,65 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-// THIS ISNT WORKING
-    sciCalc.addEventListener('click', function(event){
-        sciCalc.style.backgroundColor = "#F0F8FF";
-        sciCalc.style.color = "#0d6efd";
-    });
+let lastClicked = null; // initialize the variable to null
+// VARIABLES TO HOLD THE MODE BUTTONS
+const sciMode = document.getElementById("sci-mode")
+const calcMode = document.getElementById("calc-mode")
 
+sciMode.addEventListener('click', function(event){
+    console.log(" click")
+  if (lastClicked === sciMode) {
+    return; // do nothing if the same button was clicked twice
+  }
+  calc.classList.add("d-none");
+  sciCalc.classList.remove("d-none");
+  sciMode.style.backgroundColor = "#F0F8FF";
+  sciMode.style.color = "#0d6efd";
+  calcMode.style.backgroundColor = "#EFEFEF";
+  calcMode.style.color = "#000000";
 
-    modeButtons.forEach(button => {
-        button.addEventListener('click', function(event){
-            // store the text content into the variable text
-            const buttonText = event.target.innerText;
-            
-            if (buttonText == "Fx"){
-                console.log("sci-mode");
-                calc.classList.add("d-none");
-                sciCalc.classList.remove("d-none");
-
-
-            } else if (buttonText == "123") {
-                console.log("calcMode")
-                calc.classList.remove("d-none");
-                sciCalc.classList.add("d-none");
-
-            }
-
-
-    });    
+  lastClicked = sciMode; // update the lastClicked variable
 });
+
+// regular calculator click
+calcMode.addEventListener('click', function(event){
+  if (lastClicked === calcMode) {
+    return; // do nothing if the same button was clicked twice
+  }
+  calc.classList.remove("d-none");
+  sciCalc.classList.add("d-none");
+  calcMode.style.backgroundColor = "#F0F8FF";
+  calcMode.style.color = "#0d6efd";
+  sciMode.style.backgroundColor = "#EFEFEF";
+  sciMode.style.color = "#000000"
+
+
+  lastClicked = calcMode; // update the lastClicked variable
+});
+
+// 
+
+//     modeButtons.forEach(button => {
+//         button.addEventListener('click', function(event){
+//             // store the text content into the variable text
+//             const buttonText = event.target.innerText;
+            
+//             if (buttonText == "Fx"){
+//                 console.log("sci-mode");
+//                 calc.classList.add("d-none");
+//                 sciCalc.classList.remove("d-none");
+
+
+//             } else if (buttonText == "123") {
+//                 console.log("calcMode")
+//                 calc.classList.remove("d-none");
+//                 sciCalc.classList.add("d-none");
+
+//             }
+
+
+//     });    
+// });
 
 });
 
@@ -186,6 +215,8 @@ function checkText(text) {
             } else {
                 return text;
             }
+}
+
          
             // BETTER IN HERE?
         // } else if (text == 'AC') {
@@ -273,4 +304,3 @@ function checkText(text) {
             //     console.log("not number");
             // } 
 
-}
