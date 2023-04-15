@@ -44,10 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const sciCalc = document.getElementById("sci-calc");
     const calc = document.getElementById("calc");
 
-    
-
-
-
     // set variable on first page load
     // this tracks the text being inputted for the calculation
     let calculation="";
@@ -109,6 +105,97 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+
+    sciButtons.forEach(button => {
+        button.addEventListener('click', function(event){
+            const buttonText = event.target.innerText;
+            // output the value to the screen display using function
+            if (buttonText == "="){
+                const result = evaluateCalculation(calculation);
+                screenDisplay(result);
+                calculation = result;
+                calcTrackDisplay(calculation);
+            } else {
+
+            }
+
+        });
+    });
+    
+
+
+
+    //     keyPressed = `math.inv(${value})` 
+            //     value = `Inv(${value}`;
+            //     calculation+=keyPressed;
+            //     display.value = value;
+            // } else if (keyPressed == 'RAD') {
+            //     keyPressed = `${value} * Math.PI / 180`
+            //     calculation+=keyPressed;
+            //     display.value = 'RAD';
+            // }  else if (keyPressed == 'DEG') {
+            //     keyPressed = `${value} * 180 / Math.PI`; 
+            //     value = keyPressed;
+            //     calculation+=keyPressed;
+            //     display.value = 'DEG';
+            // } else if (keyPressed == 'x!') {
+            //     keyPressed = `Math.factorial(${value})` 
+            //     value = `${value}!`;
+            //     calculation+=keyPressed;
+            //     display.value = value;
+            // }  else if (keyPressed == 'sin') {
+            //     keyPressed = `Math.sin(${value})`
+            //     calculation+=keyPressed;
+            //     display.value = `sin(${value})`;
+            //     // NOT SURE WHAT THIS IS??? LN
+            // } else if (keyPressed =='ln') {
+            //     keyPressed = 'Math.LOG10E' 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            // } else if (keyPressed == 'π') {
+            //     keyPressed = 'Math.PI' 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            // } else if (keyPressed == 'cos') {
+            //     keyPressed = `Math.cos(${value})`
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            //     // NOT SURE THIS BELOW IS RIGHT
+            // } else if (keyPressed == 'log') {
+            //     keyPressed = 'Math.LOG10E' 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            //     // NOT SURE THIS BELOW IS RIGHT
+            // } else if (keyPressed == 'e') {
+            //     keyPressed = 'Math.E' 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            // } else if (keyPressed == 'tan') {
+            //     keyPressed = `Math.tan(${value})`
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            //     // NOT SURE THIS BELOW IS RIGHT
+            // } else if (keyPressed == 'Ans') {
+            //     keyPressed = '*0.01' 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            //     // NOT SURE THIS BELOW IS RIGHT
+            // } else if (keyPressed == 'EXP') {
+            //     keyPressed = '*0.01' 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            // } else if (keyPressed == 'Xy') {
+            //     keyPressed = `${value}^` 
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            // } else if (keyPressed == '√') {
+            //     keyPressed = `Math.sqrt(${value})`
+            //     value = keyPressed;
+            //     display.value = keyPressed;
+            // } 
+
+
+
 let lastClicked = null; // initialize the variable to null
 // VARIABLES TO HOLD THE MODE BUTTONS
 const sciMode = document.getElementById("sci-mode")
@@ -145,29 +232,6 @@ calcMode.addEventListener('click', function(event){
   lastClicked = calcMode; // update the lastClicked variable
 });
 
-// 
-
-//     modeButtons.forEach(button => {
-//         button.addEventListener('click', function(event){
-//             // store the text content into the variable text
-//             const buttonText = event.target.innerText;
-            
-//             if (buttonText == "Fx"){
-//                 console.log("sci-mode");
-//                 calc.classList.add("d-none");
-//                 sciCalc.classList.remove("d-none");
-
-
-//             } else if (buttonText == "123") {
-//                 console.log("calcMode")
-//                 calc.classList.remove("d-none");
-//                 sciCalc.classList.add("d-none");
-
-//             }
-
-
-//     });    
-// });
 
 });
 
