@@ -1,17 +1,29 @@
 /*
 need to
 
-
- - check key entered, if scientific run the scientific function, if non scientific run the normal function
- - check type of scientific key, some will be added to the calc, some will be 
+- implement following buttons
+- RAD / DEG switch
+    - if rad, then treat angles differently, if switch treat angles differently
+- inv
+    - understand how inv works
+    - implement inv
+- ln
+- log
+- e
+- EXP
+- Ans
 
  - implement solution for open brackets
     - if ( placed after a number, then put in * between them
     - if no ) bracket
 
+
+- try catch error messages as a popup above the calculator
+
 - hide scientific keys when reached smaller breakpoint but show at larger breakpoint
 - restrict size of app at larger breakpoint
 
+ - refactor code so its more readable   
 
 FIXED
 - simple calculations not working, 
@@ -36,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // }
 
     const calcButtons = document.querySelectorAll('.calculator');
+    const calculatorButtons = document.querySelectorAll('.calculatorButton');
     const sciButtons = document.querySelectorAll('.sci-calculator');
     const modeButtons = document.querySelectorAll('.mode-button');
 
@@ -50,17 +63,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Listen for regular calculator button press
     // for each button listen to a press
-    calcButtons.forEach(button =>{
+    calculatorButtons.forEach(button =>{
         // on a click event
         button.addEventListener('click', function(event){
             // store the text content into the variable text
-            const buttonText = event.target.innerText;
+            let buttonText = event.target.innerText;
             // output the value to the screen display using function
-            let button = checkText(buttonText)
-            
+            buttonText = checkText(buttonText)
+            let result
             
             if (buttonText == "="){
-                const result = evaluateCalculation(calculation);
+                result = evaluateCalculation(calculation);
                 screenDisplay(result);
                 calculation = result;
                 calcTrackDisplay(calculation);
@@ -68,15 +81,52 @@ document.addEventListener("DOMContentLoaded", function() {
                 calculation="";
                 screenDisplay("");
                 calcTrackDisplay(calculation);
+             } else if (buttonText == "Inv") {
+                // THIS DOESN'T WORK??
+                result = evaluateCalculation(calculation);
+                calculation = `Math.inv(${result})`
+                calcTrackDisplay(calculation);
+                calculation = evaluateCalculation(calculation);
+                screenDisplay(calculation); 
+
+             } else if (buttonText == 'RAD') {
+                // THIS SHOULD BE A SWITCH THAT ONLY WORKS WITH RAD/DEG
+                result = evaluateCalculation(calculation);
+                result = `${result} * Math.PI / 180`
+                calculation=result;
+                screenDisplay(result); 
+                calcTrackDisplay(calculation);
+             } else if (buttonText == '√') {
+                    result = evaluateCalculation(calculation);
+                    result = Math.sqrt(result);
+                    calculation=result;
+                    screenDisplay(result); 
+                    calcTrackDisplay(calculation);
+            } else if (buttonText == 'π') {
+                result = evaluateCalculation(calculation);
+                console.log(result);
+                // check if there is a value in the display
+                if (result === undefined) {
+                    console.log("empty display");
+                    calculation = Math.PI;
+                } else {
+                    console.log("display");
+                    calculation = result*Math.PI;
+                }
+                result = evaluateCalculation(calculation)
+                screenDisplay(result); 
+                calcTrackDisplay(result);
+            } else if (buttonText == "x!"){
+                result = evaluateCalculation(calculation);
+                for (let i=result-1; i>0; i--) {
+                    result = result*i;
+                }
+                screenDisplay(result); 
+                calcTrackDisplay(calculation+"!");
+                calculation = result;
             } else {
-                /*
-                    REFACTOR OPPORTUNITY:
-                     - pull out into a seperate function and incorporate with the other display function
-                   
-                */
                 // update the calculation variable with the button data entry
-                
-                // store the displa of the calculator in variable
+                // store the display of the calculator in variable
                 let currentDisplay = document.getElementById('calc-display');
                 // check if the calculator is displaying a number
                 let numCheck = Number(currentDisplay.value);
@@ -89,14 +139,14 @@ document.addEventListener("DOMContentLoaded", function() {
                     // if button pressed wasn't a number the screen will be wiped with the operator value in place
                     console.log("calc: ", calculation)
                     // display the button pressed in the calculator
-                    screenDisplay(button);
-                    calculation+=button;
+                    screenDisplay(buttonText);
+                    calculation+=buttonText;
                     // display the current calculation in the smaller display
                     calcTrackDisplay(calculation);
                 } else {
                     // used to ensure numbers are increased in display instead of being wiped
-                    currentDisplay.value = currentDisplay.value + button;
-                    calculation+=button;
+                    currentDisplay.value = currentDisplay.value + buttonText;
+                    calculation+=buttonText;
                     calcTrackDisplay(calculation);
                 }
                 
@@ -106,43 +156,28 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    sciButtons.forEach(button => {
-        button.addEventListener('click', function(event){
-            const buttonText = event.target.innerText;
-            // output the value to the screen display using function
-            if (buttonText == "="){
-                const result = evaluateCalculation(calculation);
-                screenDisplay(result);
-                calculation = result;
-                calcTrackDisplay(calculation);
-            } else {
+    // sciButtons.forEach(button => {
+    //     button.addEventListener('click', function(event){
+    //         const buttonText = event.target.innerText;
+    //         // output the value to the screen display using function
+    //         if (buttonText == "="){
+    //             const result = evaluateCalculation(calculation);
+    //             screenDisplay(result);
+    //             calculation = result;
+    //             calcTrackDisplay(calculation);
+    //         } else {
 
-            }
+    //         }
 
-        });
-    });
+    //     });
+    // });
     
 
 
 
-    //     keyPressed = `math.inv(${value})` 
-            //     value = `Inv(${value}`;
-            //     calculation+=keyPressed;
-            //     display.value = value;
-            // } else if (keyPressed == 'RAD') {
-            //     keyPressed = `${value} * Math.PI / 180`
-            //     calculation+=keyPressed;
-            //     display.value = 'RAD';
-            // }  else if (keyPressed == 'DEG') {
-            //     keyPressed = `${value} * 180 / Math.PI`; 
-            //     value = keyPressed;
-            //     calculation+=keyPressed;
-            //     display.value = 'DEG';
-            // } else if (keyPressed == 'x!') {
-            //     keyPressed = `Math.factorial(${value})` 
-            //     value = `${value}!`;
-            //     calculation+=keyPressed;
-            //     display.value = value;
+
+            
+           
             // }  else if (keyPressed == 'sin') {
             //     keyPressed = `Math.sin(${value})`
             //     calculation+=keyPressed;
@@ -188,11 +223,7 @@ document.addEventListener("DOMContentLoaded", function() {
             //     keyPressed = `${value}^` 
             //     value = keyPressed;
             //     display.value = keyPressed;
-            // } else if (keyPressed == '√') {
-            //     keyPressed = `Math.sqrt(${value})`
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            // } 
+
 
 
 
@@ -271,11 +302,19 @@ function checkText(text) {
     console.log(text)
 
             if (text == 'x') {
-                return '*'
+                return '*';
             } else if (text == '÷') {
-                return '/'
+                return '/';
             } else if (text == '%') {
-                return'*0.01' 
+                return'*0.01';
+            } else if (text =='Xy'){
+                return '**';
+            } else if (text =='cos'){
+                return 'Math.cos(';
+            } else if (text =='tan'){
+                return 'Math.tan(';
+            } else if (text =='sin'){
+                return 'Math.sin(';
             } else {
                 return text;
             }
