@@ -20,17 +20,6 @@ need to
 
  - refactor code so its more readable   
 
-FIXED
-- simple calculations not working, 
- 1- need to allow several numbers to display and then be used in a calculation
- 2- currently calculation is returning a long concatenated string
-- edit displays to align right values
-- edit smaller display to have no border
-- smaller display should show numbers when updating the calculator
-    - smaller display to show numbers e.g. 2 entered twice needs to show 22 in smaller
-        - could be done by updating calc only after the check
-- implement solution to put in the scientific keys 
-    - use button to show scientific keys
 
 */
 
@@ -278,9 +267,9 @@ function evaluateCalculation(calculation) {
     result = calculation
         .replace("π", "Math.PI")
         .replace( "√", "Math.sqrt")
-        .replace("sin(", "Math.PI")
-        .replace("tan(", "Math.PI")
-        .replace("cos(", "Math.PI")
+        .replace("sin(", "Math.sin(")
+        .replace("tan(", "Math.tan(")
+        .replace("cos(", "Math.cos(")
         .replace("sin-1(", "Math.asin(")
         .replace("tan-1(", "Math.atan(")
         .replace("cos-1(", "Math.acos(")
@@ -299,8 +288,6 @@ function mainCalcDisplay(text) {
       }
       
     display.value = text
-        .replace("Math.PI", "π")
-        .replace("Math.sqrt", "√");
     console.log(text)
 
 }
@@ -315,13 +302,16 @@ function calcTrackDisplay(text) {
         text = String(text); // Convert text to a string if it's not already one
       }
     
+    //   ************************************************
+    //   TESTING REQUIRED< ARE THESE NEEDED, NEED MORE?
     display.value = text
         .replace("Math.PI", "π")
         .replace("Math.sqrt", "√");
     console.log(text)
 }
 
-// Used to convert the text of a button into its mathematical equivalent
+// Used to convert the text of a button into its mathematical equivalent with brackets
+// could be dropped for replace instead, or used within if statements. 
 function checkText(text) {
 
     console.log("Screen Display: ", text)
