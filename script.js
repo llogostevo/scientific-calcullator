@@ -4,18 +4,13 @@ need to
 - implement following buttons
 - RAD / DEG switch
     - if rad, then treat angles differently, if switch treat angles differently
-- inv
-    - understand how inv works
-    - implement inv
+
+    Need to implement the following and also the inverse of them
 - ln
 - log
 - e
 - EXP
 - Ans
-
- - implement solution for open brackets
-    - if ( placed after a number, then put in * between them
-    - if no ) bracket
 
 
 - try catch error messages as a popup above the calculator
@@ -49,13 +44,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const sciCalc = document.getElementById("sci-calc");
     const calc = document.getElementById("calc");
 
-
-    // OBSOLETE - REMOVE?
-    const calcButtons = document.querySelectorAll('.calculator');
-    const sciButtons = document.querySelectorAll('.sci-calculator');
-    const modeButtons = document.querySelectorAll('.mode-button');
-    // other classes not used?
-    // sci-calculator-buttons  
 
     // set variable on first page load
     // this tracks the text being inputted for the calculation
@@ -102,39 +90,36 @@ document.addEventListener("DOMContentLoaded", function() {
              } else if (buttonText == '√') {
                      // check if the last button was a number or not   
                 if ( (isNaN(lastButton))) {
-                    // if not a number just put Math.Pi into calcuation
                     console.log(lastButton);
-                    calculation+=`Math.sqrt(`;
+                    calculation+=`${buttonText}(`;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay("√");
+                    mainCalcDisplay(`${buttonText}(`);
                 } else {
                     // if it is a number then multiply the current caclulation against pi
                     console.log("display");
                     result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * by pi
-                    calculation += "*Math.sqrt(";
+                    calculation += `*${buttonText}(`;
                     calcTrackDisplay(calculation);
-                    mainCalcDisplay("√"); 
+                    mainCalcDisplay(`${buttonText}(`); 
                 }
             } else if (buttonText == 'π') {
                 // check if the last button was a number or not   
                 if ( (isNaN(lastButton))) {
                     // if not a number just put Math.Pi into calcuation
                     console.log(lastButton);
-                    calculation+="Math.PI";
+                    calculation+=buttonText;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay("π");
+                    mainCalcDisplay(buttonText);
                 } else {
                     // if it is a number then multiply the current caclulation against pi
-                    console.log("display");
                     result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * by pi
-                    calculation += "*Math.PI";
+                    calculation += `*${buttonText}`;
                     calcTrackDisplay(calculation);
                 }
-                calculation = evaluateCalculation(calculation)
-                mainCalcDisplay(calculation); 
-                
+
+
             } else if (buttonText == "x!"){
                 let lastNum =0;
                 if ( (isNaN(lastButton))) {
@@ -152,7 +137,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 calculation = removeLastInteger(calculation);
                 calculation+=String(lastNum);
                 calcTrackDisplay(calculation);
-
+            
+              }  else if (buttonText == "Inv"){
+                    console.log("Inverse Mode")
+                    // IN HERE PUT THE POPUP IN BOOTSTRAP SO CAN BE SEEN INVERSE MODE IS SET
 
             } else {
                 // update the calculation variable with the button data entry
@@ -183,90 +171,28 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             lastButton = buttonText;
-            console.log("last button was:", lastButton)
-            if (isNaN(lastButton)){
-                console.log("NOT A NUMBER")
-            }
+            // to test lastbutton
+            // console.log("last button was:", lastButton)
+            // if (isNaN(lastButton)){
+            //     console.log("NOT A NUMBER")
+            // }
 
         });
+
+        
+
+
     });
 
-
-// FOLLWING NEED RESEARCH
-            // } else if (buttonText == "Inv") {
-            //     // THIS DOESN'T WORK??
-            //     result = evaluateCalculation(calculation);
-            //     calculation = `Math.inv(${result})`
-            //     calcTrackDisplay(calculation);
-            //     calculation = evaluateCalculation(calculation);
-            //     mainCalcDisplay(calculation); 
-            //  } else if (buttonText == 'RAD') {
-            //     // THIS SHOULD BE A SWITCH THAT ONLY WORKS WITH RAD/DEG
-            //     result = evaluateCalculation(calculation);
-            //     result = `${result} * Math.PI / 180`
-            //     calculation=result;
-            //     mainCalcDisplay(result); 
-            //     calcTrackDisplay(calculation);
-
-                
-           
-            // }  else if (keyPressed == 'sin') {
-            //     keyPressed = `Math.sin(${value})`
-            //     calculation+=keyPressed;
-            //     display.value = `sin(${value})`;
-            //     // NOT SURE WHAT THIS IS??? LN
-            // } else if (keyPressed =='ln') {
-            //     keyPressed = 'Math.LOG10E' 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            // } else if (keyPressed == 'π') {
-            //     keyPressed = 'Math.PI' 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            // } else if (keyPressed == 'cos') {
-            //     keyPressed = `Math.cos(${value})`
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            //     // NOT SURE THIS BELOW IS RIGHT
-            // } else if (keyPressed == 'log') {
-            //     keyPressed = 'Math.LOG10E' 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            //     // NOT SURE THIS BELOW IS RIGHT
-            // } else if (keyPressed == 'e') {
-            //     keyPressed = 'Math.E' 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            // } else if (keyPressed == 'tan') {
-            //     keyPressed = `Math.tan(${value})`
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            //     // NOT SURE THIS BELOW IS RIGHT
-            // } else if (keyPressed == 'Ans') {
-            //     keyPressed = '*0.01' 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            //     // NOT SURE THIS BELOW IS RIGHT
-            // } else if (keyPressed == 'EXP') {
-            //     keyPressed = '*0.01' 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-            // } else if (keyPressed == 'Xy') {
-            //     keyPressed = `${value}^` 
-            //     value = keyPressed;
-            //     display.value = keyPressed;
-
-
-
-
-let lastClicked = null; // initialize the variable to null
+// toggles the mode between scientific and regular calculator
+let lastModeClicked = null; // initialize the variable to null
 // VARIABLES TO HOLD THE MODE BUTTONS
 const sciMode = document.getElementById("sci-mode")
 const calcMode = document.getElementById("calc-mode")
 
 sciMode.addEventListener('click', function(event){
     console.log(" click")
-  if (lastClicked === sciMode) {
+  if (lastModeClicked === sciMode) {
     return; // do nothing if the same button was clicked twice
   }
   calc.classList.add("d-none");
@@ -276,12 +202,12 @@ sciMode.addEventListener('click', function(event){
   calcMode.style.backgroundColor = "#EFEFEF";
   calcMode.style.color = "#000000";
 
-  lastClicked = sciMode; // update the lastClicked variable
+  lastModeClicked = sciMode; // update the lastModeClicked variable
 });
 
 // regular calculator click
 calcMode.addEventListener('click', function(event){
-  if (lastClicked === calcMode) {
+  if (lastModeClicked === calcMode) {
     return; // do nothing if the same button was clicked twice
   }
   calc.classList.remove("d-none");
@@ -292,9 +218,53 @@ calcMode.addEventListener('click', function(event){
   sciMode.style.color = "#000000"
 
 
-  lastClicked = calcMode; // update the lastClicked variable
+  lastModeClicked = calcMode; // update the lastModeClicked variable
 });
 
+
+// Code to check if the inverse button has been clicked
+
+    // set inverse variable to track inverse toggle button click
+    const inverse = document.getElementById("inv-button")
+    // select all inverse buttons
+    const inverseButtons = document.querySelectorAll(".inverse");
+    // select all non inverse buttons
+    const nonInverseButtons = document.querySelectorAll(".non-inverse")
+
+    // on click of the inverse toggle
+    inverse.addEventListener('click', function (event) {
+        console.log("Inverse Clicked");
+
+        // change the background of the inverse toggle button to show it is toggled on or off
+        if (inverse.classList.contains("btn-secondary")){
+            inverse.classList.remove("btn-secondary");
+            inverse.classList.add("btn-light");
+        } else {
+            inverse.classList.add("btn-secondary");
+            inverse.classList.remove("btn-light");
+        }
+        
+
+        inverseButtons.forEach(button => {
+            // show the inverse buttons if they are hidden
+            if (button.classList.contains("d-none")){
+                button.classList.remove("d-none");
+            } else {
+                //hide the inverse buttons if they are shown
+                button.classList.add("d-none");
+            }
+        });
+
+        nonInverseButtons.forEach(button => {
+            // show the non inverse buttons if they are hidden
+            if (button.classList.contains("d-none")){
+                button.classList.remove("d-none");
+            } else {
+                // hide the non inverse buttons if they are shown
+                button.classList.add("d-none");
+            }
+        });
+    });
 
 });
 
@@ -304,7 +274,17 @@ DEVELOPMENT ONLY PRODUCTIION REFACTOR NEEDED:
     - this currently uses eval which is not safe for production purporses
 */
 function evaluateCalculation(calculation) {
-    const result = eval(calculation);
+    let result = 0;
+    result = calculation
+        .replace("π", "Math.PI")
+        .replace( "√", "Math.sqrt")
+        .replace("sin(", "Math.PI")
+        .replace("tan(", "Math.PI")
+        .replace("cos(", "Math.PI")
+        .replace("sin-1(", "Math.asin(")
+        .replace("tan-1(", "Math.atan(")
+        .replace("cos-1(", "Math.acos(")
+    result = eval(result)
     return result;
 }
 
@@ -347,23 +327,29 @@ function checkText(text) {
     console.log("Screen Display: ", text)
     console.log(text)
 
-            if (text == 'x') {
-                return '*';
-            } else if (text == '÷') {
-                return '/';
-            } else if (text == '%') {
-                return'*0.01';
-            } else if (text =='Xy'){
-                return '**';
-            } else if (text =='cos'){
-                return 'Math.cos(';
-            } else if (text =='tan'){
-                return 'Math.tan(';
-            } else if (text =='sin'){
-                return 'Math.sin(';
-            } else {
-                return text;
-            }
+    if (text == 'x') {
+        return '*';
+    } else if (text == '÷') {
+        return '/';
+    } else if (text == '%') {
+        return '*0.01';
+    } else if (text == 'Xy') {
+        return '**';
+    } else if (text == 'cos') {
+        return 'cos(';
+    } else if (text == 'tan') {
+        return 'tan(';
+    } else if (text == 'sin') {
+        return 'sin(';
+    } else if (text == 'cos-1') {
+        return 'cos-1(';
+    } else if (text == 'tan-1') {
+        return 'tan-1(';
+    } else if (text == 'sin-1') {
+        return 'sin-1(';
+    } else {
+        return text;
+    }
 }
 
 // used to remove the last non integer value from the calculation where required
@@ -395,6 +381,8 @@ function removeLastNonInteger(str) {
     }
     
   }
+
+
 
  
   
