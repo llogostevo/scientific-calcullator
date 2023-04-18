@@ -93,7 +93,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     mainCalcDisplay(`${buttonText}(`); 
                 }
             } else if (buttonText == 'π') {
-                // check if the last button was a number or not   
+
+                //check if the last button was a number or not   
                 if ( (isNaN(lastButton))) {
                     // if not a number just put Math.Pi into calcuation
                     console.log(lastButton);
@@ -127,11 +128,75 @@ document.addEventListener("DOMContentLoaded", function() {
                 calculation+=String(lastNum);
                 calcTrackDisplay(calculation);
             
-              }  else if (buttonText == "Inv"){
+            }  else if (buttonText == "Inv"){
                     console.log("Inverse Mode")
                     // IN HERE PUT THE POPUP IN BOOTSTRAP SO CAN BE SEEN INVERSE MODE IS SET
+            
+            } else if (buttonText == "Rnd"){
+                        let random = Math.random();
+                        // check if the last button was not a number or if it was a random number
+                        if ( (isNaN(lastButton))&& lastButton!="Rnd") {
+                            // put the random number into the calculation
+                            calculation += `${String(random)}`;
+                            mainCalcDisplay(`${String(random)}`);
+                        } else {
+                            // multiply the random number to the last value in the calculation
+                            calculation += `*${String(random)}`;
+                            mainCalcDisplay(`*${String(random)}`)
 
-            } else {
+                        }
+                        // display the calculation to the tracker
+                        calcTrackDisplay(calculation);
+            
+            // *************************************
+            // THIS NEEDS DOING
+            // *************************************
+
+            } else if (buttonText == "ln"){
+                console.log(buttonText)
+            
+            } else if (buttonText == "y√x"){
+                    console.log(buttonText)
+
+
+            } else if (buttonText == "e"){
+                console.log(buttonText)
+
+
+            } else if (buttonText == "log"){
+                console.log(buttonText)
+
+
+            } else if (buttonText == "EXP"){
+                console.log(buttonText)
+
+            } else if (buttonText == "Xy"){
+                console.log(buttonText)
+                
+            } else if (buttonText == "x2"){
+                console.log(buttonText)
+
+                let lastNum =0;
+                //check if the last button is a number or not
+                if ( (isNaN(lastButton))) {
+                    //if not
+                    // remove the last non integer from calculation
+                    calculation = removeLastNonInteger(calculation)
+                }
+                //get the last integer
+                lastNum = findLastInteger(calculation)
+                //display last integer as a sqaure
+                mainCalcDisplay(`${String(lastNum)}**2`);
+                //claculate the square
+                lastNum = lastNum**2;
+                // remove the last integer from the calc
+                calculation = removeLastInteger(calculation);
+                // replace the last integer with the square of itself
+                calculation+=String(lastNum);
+                // display the calculation to the tracking display
+                calcTrackDisplay(calculation);
+                
+            }  else {
                 // update the calculation variable with the button data entry
                 // store the display of the calculator in variable
                 let currentDisplay = document.getElementById('calc-display');
@@ -139,8 +204,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 let numCheck = Number(currentDisplay.value);
                 // check if the button pressed is a number
                 let keyCheck = Number(buttonText);
-                // if either is not a number then 
-                if (isNaN(numCheck) || isNaN(keyCheck)) {
+                // if is not a number then 
+                if ((isNaN(numCheck) || isNaN(keyCheck)) && buttonText!=".") {
                     // following will put the button pressed onto the cacluator display if the button was not a number
                     // if the button was a number but then previous value was an operator it will wipe screen and put new number
                     // if button pressed wasn't a number the screen will be wiped with the operator value in place
@@ -340,6 +405,25 @@ function checkText(text) {
     } else {
         return text;
     }
+}
+
+// add a bracket to a key
+function addBracketMult(prevButton, currentButton, calculation) {
+    if ((isNaN(prevButton))) {
+        calculation += `${currentButton}(`;
+        calcTrackDisplay(calculation)
+        mainCalcDisplay(`${currentButton}(`);
+    } else {
+        // if it is a number then multiply the current caclulation against pi
+        result = evaluateCalculation(calculation);
+        // set the calculation to be the current result for the calculation * by pi
+        calculation += `*${currentButton}(`;
+        calcTrackDisplay(calculation);
+        mainCalcDisplay(`${currentButton}(`);
+    }
+
+    return calculation;
+
 }
 
 // used to remove the last non integer value from the calculation where required
