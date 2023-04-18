@@ -42,88 +42,118 @@ FIXED
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Document is Ready");
 
-    // function evaluate(calculation){
-    //     result = eval(calculation);
-    //     display.value = result;
-    // }
-
-    const calcButtons = document.querySelectorAll('.calculator');
+    // set variable to track a calculator button click
     const calculatorButtons = document.querySelectorAll('.calculatorButton');
-    const sciButtons = document.querySelectorAll('.sci-calculator');
-    const modeButtons = document.querySelectorAll('.mode-button');
 
-
-    // VARIABLES TO SHOW AND HIDE THE SCI CALCULATOR BUTTONS
+    // set varaiables to hide the sci calculator div vs the calculator div
     const sciCalc = document.getElementById("sci-calc");
     const calc = document.getElementById("calc");
+
+
+    // OBSOLETE - REMOVE?
+    const calcButtons = document.querySelectorAll('.calculator');
+    const sciButtons = document.querySelectorAll('.sci-calculator');
+    const modeButtons = document.querySelectorAll('.mode-button');
+    // other classes not used?
+    // sci-calculator-buttons  
 
     // set variable on first page load
     // this tracks the text being inputted for the calculation
     let calculation="";
+    // to keep track of the last button pressed
+    // start with AC so that on page load the lastbutton is not considered a number
+    let lastButton ="AC"
 
-    // Listen for regular calculator button press
+    // Listen for calculator button press
     // for each button listen to a press
     calculatorButtons.forEach(button =>{
         // on a click event
         button.addEventListener('click', function(event){
             // store the text content into the variable text
-            let buttonText = event.target.innerText;
+            let buttonText = button.innerText;
             // output the value to the screen display using function
             buttonText = checkText(buttonText)
+            
+            // create a variable to use as a result (IS THIS NEEDED?)
             let result
             
-            if (buttonText == "="){
+            // Check for each of the current buttons being pressed
+            if (buttonText == "=" && (lastButton != "=" && lastButton!="AC")){
+                // evaluate the current calculation and store in result
                 result = evaluateCalculation(calculation);
-                screenDisplay(result);
-                calculation = result;
-                calcTrackDisplay(calculation);
-            } else if (buttonText == "AC") {
+                //change the main calculator display to show the result of the calculation
+                mainCalcDisplay(result);
+                //change the value in calculation to be the total result
+                // change the value in the calcuator tracking display to equal the result
+                calcTrackDisplay("Ans: "+result);
+                // reset the value in calculation to start again
+                calculation = "";
+            } else if (buttonText == "=" && (lastButton == "=" || lastButton=="AC")) {
+                mainCalcDisplay("");
+                calcTrackDisplay("");
                 calculation="";
-                screenDisplay("");
-                calcTrackDisplay(calculation);
-             } else if (buttonText == "Inv") {
-                // THIS DOESN'T WORK??
-                result = evaluateCalculation(calculation);
-                calculation = `Math.inv(${result})`
-                calcTrackDisplay(calculation);
-                calculation = evaluateCalculation(calculation);
-                screenDisplay(calculation); 
-
-             } else if (buttonText == 'RAD') {
-                // THIS SHOULD BE A SWITCH THAT ONLY WORKS WITH RAD/DEG
-                result = evaluateCalculation(calculation);
-                result = `${result} * Math.PI / 180`
-                calculation=result;
-                screenDisplay(result); 
-                calcTrackDisplay(calculation);
+            } else if (buttonText == "AC") {
+                // reset the calculation to start again
+                calculation="";
+                // reset the main calculator to display to be emtpy
+                mainCalcDisplay("");
+                // set the tracking display to be AC to show reset
+                calcTrackDisplay("AC");
              } else if (buttonText == '√') {
-                    result = evaluateCalculation(calculation);
-                    result = Math.sqrt(result);
-                    calculation=result;
-                    screenDisplay(result); 
-                    calcTrackDisplay(calculation);
-            } else if (buttonText == 'π') {
-                result = evaluateCalculation(calculation);
-                console.log(result);
-                // check if there is a value in the display
-                if (result === undefined) {
-                    console.log("empty display");
-                    calculation = Math.PI;
+                     // check if the last button was a number or not   
+                if ( (isNaN(lastButton))) {
+                    // if not a number just put Math.Pi into calcuation
+                    console.log(lastButton);
+                    calculation+=`Math.sqrt(`;
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay("√");
                 } else {
+                    // if it is a number then multiply the current caclulation against pi
                     console.log("display");
-                    calculation = result*Math.PI;
+                    result = evaluateCalculation(calculation);
+                    // set the calculation to be the current result for the calculation * by pi
+                    calculation += "*Math.sqrt(";
+                    calcTrackDisplay(calculation);
+                    mainCalcDisplay("√"); 
                 }
-                result = evaluateCalculation(calculation)
-                screenDisplay(result); 
-                calcTrackDisplay(result);
+            } else if (buttonText == 'π') {
+                // check if the last button was a number or not   
+                if ( (isNaN(lastButton))) {
+                    // if not a number just put Math.Pi into calcuation
+                    console.log(lastButton);
+                    calculation+="Math.PI";
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay("π");
+                } else {
+                    // if it is a number then multiply the current caclulation against pi
+                    console.log("display");
+                    result = evaluateCalculation(calculation);
+                    // set the calculation to be the current result for the calculation * by pi
+                    calculation += "*Math.PI";
+                    calcTrackDisplay(calculation);
+                }
+                calculation = evaluateCalculation(calculation)
+                mainCalcDisplay(calculation); 
+                
             } else if (buttonText == "x!"){
-                result = evaluateCalculation(calculation);
-                for (let i=result-1; i>0; i--) {
-                    result = result*i;
+                let lastNum =0;
+                if ( (isNaN(lastButton))) {
+                    // remove the last non integer from calculation
+                    calculation = removeLastNonInteger(calculation)
+                    
+                    lastNum = findLastInteger(calculation)
+                    mainCalcDisplay(`${String(lastNum)}!`);
+                    lastNum = factorialise(lastNum);
+                } else {
+                    lastNum = findLastInteger(calculation)
+                    mainCalcDisplay(`${String(lastNum)}!`);
+                    lastNum = factorialise(lastNum)
                 }
-                screenDisplay(result); 
-                calcTrackDisplay(calculation+"!");
-                calculation = result;
+                calculation = removeLastInteger(calculation);
+                calculation+=String(lastNum);
+                calcTrackDisplay(calculation);
+
+
             } else {
                 // update the calculation variable with the button data entry
                 // store the display of the calculator in variable
@@ -131,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // check if the calculator is displaying a number
                 let numCheck = Number(currentDisplay.value);
                 // check if the button pressed is a number
-                let keyCheck = Number(button);
+                let keyCheck = Number(buttonText);
                 // if either is not a number then 
                 if (isNaN(numCheck) || isNaN(keyCheck)) {
                     // following will put the button pressed onto the cacluator display if the button was not a number
@@ -139,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     // if button pressed wasn't a number the screen will be wiped with the operator value in place
                     console.log("calc: ", calculation)
                     // display the button pressed in the calculator
-                    screenDisplay(buttonText);
+                    mainCalcDisplay(buttonText);
                     calculation+=buttonText;
                     // display the current calculation in the smaller display
                     calcTrackDisplay(calculation);
@@ -152,31 +182,33 @@ document.addEventListener("DOMContentLoaded", function() {
                 
             }
 
+            lastButton = buttonText;
+            console.log("last button was:", lastButton)
+            if (isNaN(lastButton)){
+                console.log("NOT A NUMBER")
+            }
+
         });
     });
 
 
-    // sciButtons.forEach(button => {
-    //     button.addEventListener('click', function(event){
-    //         const buttonText = event.target.innerText;
-    //         // output the value to the screen display using function
-    //         if (buttonText == "="){
-    //             const result = evaluateCalculation(calculation);
-    //             screenDisplay(result);
-    //             calculation = result;
-    //             calcTrackDisplay(calculation);
-    //         } else {
+// FOLLWING NEED RESEARCH
+            // } else if (buttonText == "Inv") {
+            //     // THIS DOESN'T WORK??
+            //     result = evaluateCalculation(calculation);
+            //     calculation = `Math.inv(${result})`
+            //     calcTrackDisplay(calculation);
+            //     calculation = evaluateCalculation(calculation);
+            //     mainCalcDisplay(calculation); 
+            //  } else if (buttonText == 'RAD') {
+            //     // THIS SHOULD BE A SWITCH THAT ONLY WORKS WITH RAD/DEG
+            //     result = evaluateCalculation(calculation);
+            //     result = `${result} * Math.PI / 180`
+            //     calculation=result;
+            //     mainCalcDisplay(result); 
+            //     calcTrackDisplay(calculation);
 
-    //         }
-
-    //     });
-    // });
-    
-
-
-
-
-            
+                
            
             // }  else if (keyPressed == 'sin') {
             //     keyPressed = `Math.sin(${value})`
@@ -277,11 +309,18 @@ function evaluateCalculation(calculation) {
 }
 
 // Used to update the the main calculator display
-function screenDisplay(text) {
+function mainCalcDisplay(text) {
     
     const display = document.getElementById('calc-display');
     console.log("Screen Display: ", text)
-    display.value = text;
+
+    if (typeof text !== 'string') {
+        text = String(text); // Convert text to a string if it's not already one
+      }
+      
+    display.value = text
+        .replace("Math.PI", "π")
+        .replace("Math.sqrt", "√");
     console.log(text)
 
 }
@@ -291,7 +330,14 @@ function calcTrackDisplay(text) {
     
     const display = document.getElementById('calc-track');
     console.log("Calc Track: ", text)
-    display.value = text;
+
+    if (typeof text !== 'string') {
+        text = String(text); // Convert text to a string if it's not already one
+      }
+    
+    display.value = text
+        .replace("Math.PI", "π")
+        .replace("Math.sqrt", "√");
     console.log(text)
 }
 
@@ -320,6 +366,38 @@ function checkText(text) {
             }
 }
 
+// used to remove the last non integer value from the calculation where required
+function removeLastNonInteger(str) {
+    return str.replace(/[^0-9]$/, '');
+  }
+
+// find the last integer value in the calculation
+  function findLastInteger(str) {
+    const match = str.match(/(\d+)[^\d]*$/);
+    return match ? parseInt(match[1], 10) : null;
+  }
+
+  // remove the last integer value in the calculation
+  function removeLastInteger(str) {
+    return str.replace(/\d+[^\d]*$/, '');
+  }
+
+//   produce the factorial of a number
+  function factorialise(num){
+    //factorial of 1 and factorial of - is 1
+    if ((num == 0) || (num == 1)){
+        return 1;
+    } else {
+        for (let i=num-1; i>0; i--) {
+            num = num*i;
+        }
+        return num
+    }
+    
+  }
+
+ 
+  
          
             // BETTER IN HERE?
         // } else if (text == 'AC') {
