@@ -154,24 +154,72 @@ document.addEventListener("DOMContentLoaded", function() {
 
             } else if (buttonText == "ln"){
                 console.log(buttonText)
+                //check if the last button was a number or not   
+                if ( (isNaN(lastButton))) {
+                    // if not a number just put LN into equation
+                    console.log(lastButton);
+                    calculation+=`${buttonText}(`;
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay(buttonText);
+                } else {
+                    // if it is a number then multiply the current caclulation against ln(number)
+                    result = evaluateCalculation(calculation);
+                    // set the calculation to be the current result for the calculation * by ln(number)
+                    calculation += `*${buttonText}(`;
+                    calcTrackDisplay(calculation);
+                }
             
-            } else if (buttonText == "y√x"){
-                    console.log(buttonText)
-
-
-            } else if (buttonText == "e"){
+            }  else if (buttonText == "e"){
                 console.log(buttonText)
+                //check if the last button was a number or not   
+                if ( (isNaN(lastButton))) {
+                    // if not a number just put into calcuation
+                    console.log(lastButton);
+                    calculation+=buttonText;
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay(buttonText);
+                } else {
+                    // if it is a number then multiply the current caclulation against 
+                    result = evaluateCalculation(calculation);
+                    // set the calculation to be the current result for the calculation
+                    calculation += `*${buttonText}`;
+                    calcTrackDisplay(calculation);
+                }
 
 
             } else if (buttonText == "log"){
                 console.log(buttonText)
-
+                //check if the last button was a number or not   
+                if ( (isNaN(lastButton))) {
+                    // if not a number just put log10 into equation
+                    console.log(lastButton);
+                    calculation+=`${buttonText}(`;
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay(buttonText);
+                } else {
+                    // if it is a number then multiply the current caclulation against log10(number)
+                    result = evaluateCalculation(calculation);
+                    // set the calculation to be the current result for the calculation * by log10(number)
+                    calculation += `*${buttonText}(`;
+                    calcTrackDisplay(calculation);
+                }
 
             } else if (buttonText == "EXP"){
                 console.log(buttonText)
-
-            } else if (buttonText == "Xy"){
-                console.log(buttonText)
+                //check if the last button was a number or not   
+                if ( (isNaN(lastButton))) {
+                    // if not a number just put EXP into equation
+                    console.log(lastButton);
+                    calculation+=`${buttonText}(`;
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay(buttonText);
+                } else {
+                    // if it is a number then multiply the current caclulation against EXP(number)
+                    result = evaluateCalculation(calculation);
+                    // set the calculation to be the current result for the calculation * by EXP(number)
+                    calculation += `*${buttonText}(`;
+                    calcTrackDisplay(calculation);
+                }
                 
             } else if (buttonText == "x2"){
                 console.log(buttonText)
@@ -195,6 +243,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 calculation+=String(lastNum);
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
+/* **********
+REMOVE LAST NON INTEGER MEANS IS NOT WORKING SO THIS DOESN"T CANCEL
+*/
+            } else if (buttonText == "Xy"){
+                console.log(buttonText)
+                let lastNum =0;
+                //check if the last button is a number or not
+                if ( (isNaN(lastButton))) {
+                    //if not
+                    // remove the last non integer from calculation
+                    calculation = removeLastNonInteger(calculation)
+                }
+                //get the last integer
+                lastNum = findLastInteger(calculation);
+                //display last integer as a sqaure
+                mainCalcDisplay(`${String(lastNum)}**`);
+                
+                calculation += `${String(lastNum)}**`;
+            
+                // display the calculation to the tracking display
+                calcTrackDisplay(calculation);
+
+             } else if (buttonText == "y√x"){
+                    console.log(buttonText)
                 
             }  else {
                 // update the calculation variable with the button data entry
@@ -338,6 +410,10 @@ function evaluateCalculation(calculation) {
         .replace("sin-1(", "Math.asin(")
         .replace("tan-1(", "Math.atan(")
         .replace("cos-1(", "Math.acos(")
+        .replace("ln(", "Math.log(")
+        .replace("log(", "Math.log10(")
+        .replace("e", "Math.E")
+        .replace("EXP(", "Math.exp(")
     result = eval(result)
     return result;
 }
