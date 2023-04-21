@@ -66,8 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 calcTrackDisplay("Ans: "+result);
                 // reset the value in calculation to start again
                 calculation = "";
-            } else if (buttonText == "=" && (lastButton == "=" || lastButton=="AC")) {
-                mainCalcDisplay("TEST");
+            } else if ((buttonText == "=" && (lastButton == "=" || lastButton=="AC")) || (Number.isInteger(buttonText) && (lastButton == "=" || lastButton=="AC")))  {
+                mainCalcDisplay("");
                 calcTrackDisplay("");
                 calculation="";
             } else if (buttonText == "AC") {
@@ -241,9 +241,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 calculation+=String(lastNum);
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
-/* **********
-REMOVE LAST NON INTEGER MEANS IS NOT WORKING SO THIS DOESN"T CANCEL
-*/
+
             } else if (buttonText == "Xy"){
                 console.log(buttonText)
                 let lastNum =0;
