@@ -147,10 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                         // display the calculation to the tracker
                         calcTrackDisplay(calculation);
-            
-            // *************************************
-            // THIS NEEDS DOING
-            // *************************************
+        
 
             } else if (buttonText == "ln"){
                 console.log(buttonText)
@@ -267,6 +264,32 @@ REMOVE LAST NON INTEGER MEANS IS NOT WORKING SO THIS DOESN"T CANCEL
 
              } else if (buttonText == "y√x"){
                     console.log(buttonText)
+
+                    //check if the last button was a number or not   
+                    if ( (isNaN(lastButton))) {
+                        // if not a number just put log10 into equation
+                        //if not
+                    // remove the last non integer from calculation
+                        calculation = removeLastNonInteger(calculation)
+                        //get the last integer
+                        
+                let x = findLastInteger(calculation);
+                // display last integer as a sqaure
+                mainCalcDisplay(`y?√(${String(x)}`);
+                calculation+= "Math.pow(x, 1/"
+                
+            
+                // display the calculation to the tracking display
+                calcTrackDisplay(calculation);
+                    } else {
+                        // if it is a number then multiply the current caclulation against log10(number)
+                        result = evaluateCalculation(calculation);
+                        // set the calculation to be the current result for the calculation * by log10(number)
+                        calculation += `*${buttonText}(`;
+                        calcTrackDisplay(calculation);
+}
+
+
                 
             }  else {
                 // update the calculation variable with the button data entry
