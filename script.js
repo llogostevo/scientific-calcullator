@@ -272,26 +272,17 @@ REMOVE LAST NON INTEGER MEANS IS NOT WORKING SO THIS DOESN"T CANCEL
                     // remove the last non integer from calculation
                         calculation = removeLastNonInteger(calculation)
                         //get the last integer
+                    }
                         
                 let x = findLastInteger(calculation);
                 calculation = removeLastInteger(calculation);
                 // display last integer as a sqaure
                 mainCalcDisplay(`y?√(${x}`);
-                calculation+= `Math.pow(${x}, 1/`
-                
-            
+                calculation+= `Math.pow(${x}, 1/`;
+                            
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
-                    } else {
-                        // if it is a number then multiply the current caclulation against log10(number)
-                        result = evaluateCalculation(calculation);
-                        // set the calculation to be the current result for the calculation * by log10(number)
-                        calculation += `*${buttonText}(`;
-                        calcTrackDisplay(calculation);
-}
-
-
-                
+                                    
             }  else {
                 // update the calculation variable with the button data entry
                 // store the display of the calculator in variable
@@ -514,9 +505,9 @@ function addBracketMult(prevButton, currentButton, calculation) {
         calcTrackDisplay(calculation)
         mainCalcDisplay(`${currentButton}(`);
     } else {
-        // if it is a number then multiply the current caclulation against pi
+        // if it is a number then multiply the current caclulation against 
         result = evaluateCalculation(calculation);
-        // set the calculation to be the current result for the calculation * by pi
+        // set the calculation to be the current result for the calculation * by 
         calculation += `*${currentButton}(`;
         calcTrackDisplay(calculation);
         mainCalcDisplay(`${currentButton}(`);
