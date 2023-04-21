@@ -67,9 +67,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 // reset the value in calculation to start again
                 calculation = "";
                 // Check ti see if last button was an = or AC so that screen starts again prir to a number input. 
-            } else if ((buttonText == "=" && (lastButton == "=" || lastButton=="AC")) || (Number.isInteger(buttonText) && (lastButton == "=" || lastButton=="AC")))  {
+            } else if ((buttonText == "=" && (lastButton == "=" || lastButton=="AC")) || (!(isNaN(buttonText)) && (lastButton == "=" || lastButton=="AC")))  {
                 mainCalcDisplay("");
-                calcTrackDisplay("test");
+                calcTrackDisplay("");
                 calculation="";
             } else if (buttonText == "AC") {
                 // reset the calculation to start again
