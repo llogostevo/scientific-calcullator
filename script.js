@@ -274,9 +274,10 @@ REMOVE LAST NON INTEGER MEANS IS NOT WORKING SO THIS DOESN"T CANCEL
                         //get the last integer
                         
                 let x = findLastInteger(calculation);
+                removeLastInteger(calculation);
                 // display last integer as a sqaure
-                mainCalcDisplay(`y?√(${String(x)}`);
-                calculation+= "Math.pow(x, 1/"
+                mainCalcDisplay(`y?√(${x}`);
+                calculation+= `Math.pow(${x}, 1/`
                 
             
                 // display the calculation to the tracking display
