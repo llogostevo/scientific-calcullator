@@ -23,8 +23,6 @@ need to
 
 */
 
-    // start with AC so that on page load the lastbutton is not considered a number
-    let lastButton ="AC"
 
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Document is Ready");
@@ -41,7 +39,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // this tracks the text being inputted for the calculation
     let calculation="";
     // to keep track of the last button pressed
-    
+    // start with AC so that on page load the lastbutton is not considered a number
+    let lastButton ="AC"
 
     // Listen for calculator button press
     // for each button listen to a press
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // reset the value in calculation to start again
                 calculation = "";
             } else if (buttonText == "=" && (lastButton == "=" || lastButton=="AC")) {
-                mainCalcDisplay("");
+                mainCalcDisplay("TEST");
                 calcTrackDisplay("");
                 calculation="";
             } else if (buttonText == "AC") {
