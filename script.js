@@ -274,7 +274,7 @@ REMOVE LAST NON INTEGER MEANS IS NOT WORKING SO THIS DOESN"T CANCEL
                         //get the last integer
                         
                 let x = findLastInteger(calculation);
-                removeLastInteger(calculation);
+                calculation = removeLastInteger(calculation);
                 // display last integer as a sqaure
                 mainCalcDisplay(`y?√(${x}`);
                 calculation+= `Math.pow(${x}, 1/`
