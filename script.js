@@ -23,6 +23,9 @@ need to
 
 */
 
+    // start with AC so that on page load the lastbutton is not considered a number
+    let lastButton ="AC"
+
 document.addEventListener("DOMContentLoaded", function() {
     console.log("Document is Ready");
 
@@ -33,13 +36,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const sciCalc = document.getElementById("sci-calc");
     const calc = document.getElementById("calc");
 
-
+    
     // set variable on first page load
     // this tracks the text being inputted for the calculation
     let calculation="";
     // to keep track of the last button pressed
-    // start with AC so that on page load the lastbutton is not considered a number
-    let lastButton ="AC"
+    
 
     // Listen for calculator button press
     // for each button listen to a press
