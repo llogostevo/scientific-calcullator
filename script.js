@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Check ti see if last button was an = or AC so that screen starts again prir to a number input. 
             } else if ((buttonText == "=" && (lastButton == "=" || lastButton=="AC")) || (Number.isInteger(buttonText) && (lastButton == "=" || lastButton=="AC")))  {
                 mainCalcDisplay("");
-                calcTrackDisplay("");
+                calcTrackDisplay("test");
                 calculation="";
             } else if (buttonText == "AC") {
                 // reset the calculation to start again
