@@ -2,16 +2,9 @@
 need to
 
 - implement following buttons
-- RAD / DEG switch
-    - if rad, then treat angles differently, if switch treat angles differently
 
-    Need to implement the following and also the inverse of them
-- ln
-- log
-- e
-- EXP
 - Ans
-
+- 10x
 
 - try catch error messages as a popup above the calculator
 
@@ -19,8 +12,6 @@ need to
 - restrict size of app at larger breakpoint
 
  - refactor code so its more readable   
-
-
 */
 
 
@@ -291,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 let numCheck = Number(currentDisplay.value);
                 // check if the button pressed is a number
                 let keyCheck = Number(buttonText);
-                // if is not a number then 
+                // boolean to check if number is entered or if the last button was an equals / AC to decide if the display is a continuation
                 if (((isNaN(numCheck) || isNaN(keyCheck)) && buttonText!=".") || (!(isNaN(buttonText)) && (lastButton == "=" || lastButton=="AC"))) {
                     // following will put the button pressed onto the cacluator display if the button was not a number
                     // if the button was a number but then previous value was an operator it will wipe screen and put new number
