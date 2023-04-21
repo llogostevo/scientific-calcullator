@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // reset the value in calculation to start again
                 calculation = "";
                 // Check ti see if last button was an = or AC so that screen starts again prir to a number input. 
-            } else if ((buttonText == "=" && (lastButton == "=" || lastButton=="AC")) || (!(isNaN(buttonText)) && (lastButton == "=" || lastButton=="AC")))  {
+            } else if (buttonText == "=" && (lastButton == "=" || lastButton=="AC")) {
                 mainCalcDisplay("");
                 calcTrackDisplay("");
                 calculation="";
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // check if the button pressed is a number
                 let keyCheck = Number(buttonText);
                 // if is not a number then 
-                if ((isNaN(numCheck) || isNaN(keyCheck)) && buttonText!=".") {
+                if (((isNaN(numCheck) || isNaN(keyCheck)) && buttonText!=".") || (!(isNaN(buttonText)) && (lastButton == "=" || lastButton=="AC")) {
                     // following will put the button pressed onto the cacluator display if the button was not a number
                     // if the button was a number but then previous value was an operator it will wipe screen and put new number
                     // if button pressed wasn't a number the screen will be wiped with the operator value in place
