@@ -1,10 +1,6 @@
 /*
 need to
 
-- implement following buttons
-
-- Ans
-
 - try catch error messages as a popup above the calculator
 
 - hide scientific keys when reached smaller breakpoint but show at larger breakpoint
@@ -31,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // to keep track of the last button pressed
     // start with AC so that on page load the lastbutton is not considered a number
     let lastButton = "AC"
-
+    // set a variable to track the last answer for the ans button
+    let ans = 0;
     // Listen for calculator button press
     // for each button listen to a press
     calculatorButtons.forEach(button => {
@@ -43,9 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
             buttonText = checkText(buttonText)
 
             // create a variable to use as a result (IS THIS NEEDED?)
-            let result
+            // let result
 
-            let ans = 0;
+            
             // Check for each of the current buttons being pressed
             if (buttonText == "=" && (lastButton != "=" && lastButton != "AC")) {
                 // evaluate the current calculation and store in result
@@ -69,6 +66,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 mainCalcDisplay("");
                 // set the tracking display to be AC to show reset
                 calcTrackDisplay("AC");
+            } else if (buttonText == "Ans") {
+                buttonText = ans;
+                mainCalcDisplay(`Ans: ${buttonText}`);
+                calculation+= buttonText
+                calcTrackDisplay(calculation);                
+
             } else if (buttonText == '√') {
                 // check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
@@ -122,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 calcTrackDisplay(calculation);
 
             } else if (buttonText == "Inv") {
+                // just used for log purposes currently
                 console.log("Inverse Mode")
                 // IN HERE PUT THE POPUP IN BOOTSTRAP SO CAN BE SEEN INVERSE MODE IS SET
 
@@ -323,7 +327,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
+           
             lastButton = buttonText;
+    
             // to test lastbutton
             // console.log("last button was:", lastButton)
             // if (isNaN(lastButton)){
@@ -441,6 +447,8 @@ function evaluateCalculation(calculation) {
         .replace("log(", "Math.log10(")
         .replace("e", "Math.E")
         .replace("EXP(", "Math.exp(")
+    
+        console.log(calculation);
     result = eval(result)
     return result;
 }
@@ -558,94 +566,3 @@ function factorialise(num) {
     }
 
 }
-
-
-
-
-
-
-// BETTER IN HERE?
-// } else if (text == 'AC') {
-//     console.log("AC: clear display")
-//     return "0"
-
-// 
-// } else if (keyPressed == 'Inv') {
-// NEEDS REFINING< NEED TO KEEP RUNNING TOTAL ON DISPLAY AFTER EACH NUMBER PRESS
-//     keyPressed = `math.inv(${value})` 
-//     value = `Inv(${value}`;
-//     calculation+=keyPressed;
-//     display.value = value;
-// } else if (keyPressed == 'RAD') {
-//     keyPressed = `${value} * Math.PI / 180`
-//     calculation+=keyPressed;
-//     display.value = 'RAD';
-// }  else if (keyPressed == 'DEG') {
-//     keyPressed = `${value} * 180 / Math.PI`; 
-//     value = keyPressed;
-//     calculation+=keyPressed;
-//     display.value = 'DEG';
-// } else if (keyPressed == 'x!') {
-//     keyPressed = `Math.factorial(${value})` 
-//     value = `${value}!`;
-//     calculation+=keyPressed;
-//     display.value = value;
-// }  else if (keyPressed == 'sin') {
-//     keyPressed = `Math.sin(${value})`
-//     calculation+=keyPressed;
-//     display.value = `sin(${value})`;
-//     // NOT SURE WHAT THIS IS??? LN
-// } else if (keyPressed =='ln') {
-//     keyPressed = 'Math.LOG10E' 
-//     value = keyPressed;
-//     display.value = keyPressed;
-// } else if (keyPressed == 'π') {
-//     keyPressed = 'Math.PI' 
-//     value = keyPressed;
-//     display.value = keyPressed;
-// } else if (keyPressed == 'cos') {
-//     keyPressed = `Math.cos(${value})`
-//     value = keyPressed;
-//     display.value = keyPressed;
-//     // NOT SURE THIS BELOW IS RIGHT
-// } else if (keyPressed == 'log') {
-//     keyPressed = 'Math.LOG10E' 
-//     value = keyPressed;
-//     display.value = keyPressed;
-//     // NOT SURE THIS BELOW IS RIGHT
-// } else if (keyPressed == 'e') {
-//     keyPressed = 'Math.E' 
-//     value = keyPressed;
-//     display.value = keyPressed;
-// } else if (keyPressed == 'tan') {
-//     keyPressed = `Math.tan(${value})`
-//     value = keyPressed;
-//     display.value = keyPressed;
-//     // NOT SURE THIS BELOW IS RIGHT
-// } else if (keyPressed == 'Ans') {
-//     keyPressed = '*0.01' 
-//     value = keyPressed;
-//     display.value = keyPressed;
-//     // NOT SURE THIS BELOW IS RIGHT
-// } else if (keyPressed == 'EXP') {
-//     keyPressed = '*0.01' 
-//     value = keyPressed;
-//     display.value = keyPressed;
-// } else if (keyPressed == 'Xy') {
-//     keyPressed = `${value}^` 
-//     value = keyPressed;
-//     display.value = keyPressed;
-// } else if (keyPressed == '√') {
-//     keyPressed = `Math.sqrt(${value})`
-//     value = keyPressed;
-//     display.value = keyPressed;
-// } 
-// else if (keyPressed >=0 && keyPressed <=9){ 
-//     value+=keyPressed
-//     display.value = value;
-//     calculation+=value;
-//     console.log('calculation:', calculation)
-// } else if (keyPressed == NaN){
-//     value="";
-//     console.log("not number");
-// } 
