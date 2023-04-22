@@ -273,6 +273,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
+            
+            } else if (buttonText == "10x"){
+
+                console.log(buttonText);
+                //check if the last button was a number or not   
+                if ((isNaN(lastButton))) {
+                    // if not a number just put log10 into equation
+                    //if not
+                    // remove the last non integer from calculation
+                    calculation = removeLastNonInteger(calculation)
+                    //get the last integer
+                }
+
+                let x = findLastInteger(calculation);
+                calculation = removeLastInteger(calculation);
+                // display last integer as a sqaure
+                mainCalcDisplay(`10**${x}`);
+                calculation += `10**${x}`;
+
+                // display the calculation to the tracking display
+                calcTrackDisplay(calculation);
+
 
             } else {
                 // update the calculation variable with the button data entry
