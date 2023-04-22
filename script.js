@@ -330,18 +330,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             lastButton = buttonText;
 
-            // to test lastbutton
-            // console.log("last button was:", lastButton)
-            // if (isNaN(lastButton)){
-            //     console.log("NOT A NUMBER")
-            // }
-
         });
 
-
-
-
     });
+
+// END OF BUTTON CLICK FOR
 
     // toggles the mode between scientific and regular calculator
     let lastModeClicked = null; // initialize the variable to null
@@ -425,9 +418,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-});
 
-// Used to carry out the calculation
+
+// SUPPORTING FUNCTIONS
+
 /*
 DEVELOPMENT ONLY PRODUCTIION REFACTOR NEEDED: 
     - this currently uses eval which is not safe for production purporses
@@ -566,3 +560,11 @@ function factorialise(num) {
     }
 
 }
+
+
+
+
+
+
+});
+
