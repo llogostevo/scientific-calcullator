@@ -4,7 +4,6 @@ need to
 - implement following buttons
 
 - Ans
-- 10x
 
 - try catch error messages as a popup above the calculator
 
@@ -46,15 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
             // create a variable to use as a result (IS THIS NEEDED?)
             let result
 
+            let ans = 0;
             // Check for each of the current buttons being pressed
             if (buttonText == "=" && (lastButton != "=" && lastButton != "AC")) {
                 // evaluate the current calculation and store in result
-                result = evaluateCalculation(calculation);
+                ans = evaluateCalculation(calculation);
                 //change the main calculator display to show the result of the calculation
-                mainCalcDisplay(result);
+                mainCalcDisplay(ans);
                 //change the value in calculation to be the total result
                 // change the value in the calcuator tracking display to equal the result
-                calcTrackDisplay("Ans: " + result);
+                calcTrackDisplay("Ans: " + ans);
                 // reset the value in calculation to start again
                 calculation = "";
                 // Check ti see if last button was an = or AC so that screen starts again prir to a number input. 
