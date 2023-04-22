@@ -6,7 +6,7 @@ need to
 - Ans to multiply
 - try catch error messages as a popup above the calculator
 
-- make science buttons wrap 
+- make science buttons wrap properly (need to alter the way the bootstrap layout is appearing to do this. )
 
  - refactor code so its more readable   
 */
