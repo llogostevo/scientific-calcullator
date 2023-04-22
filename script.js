@@ -1,6 +1,9 @@
 /*
 need to
-
+- RAD/DEG Appearance (see css file)
+- button to span two columns
+- RAD/DEG Toggle and action
+- Ans to multiply
 - try catch error messages as a popup above the calculator
 
 - make science buttons wrap 
