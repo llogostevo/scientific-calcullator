@@ -3,8 +3,7 @@ need to
 
 - try catch error messages as a popup above the calculator
 
-- hide scientific keys when reached smaller breakpoint but show at larger breakpoint
-- restrict size of app at larger breakpoint
+- make science buttons wrap 
 
  - refactor code so its more readable   
 */
@@ -334,13 +333,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
-// END OF BUTTON CLICK FOR
+    // END OF BUTTON CLICK FOR
 
     // toggles the mode between scientific and regular calculator
     let lastModeClicked = null; // initialize the variable to null
     // VARIABLES TO HOLD THE MODE BUTTONS
     const sciMode = document.getElementById("sci-mode")
     const calcMode = document.getElementById("calc-mode")
+    // variable to manipulate the equals in the scientific buttons
+    const sciEqual = document.getElementById("sci-equals")
 
     sciMode.addEventListener('click', function (event) {
         console.log(" click")
@@ -369,10 +370,35 @@ document.addEventListener("DOMContentLoaded", function () {
         sciMode.style.backgroundColor = "#EFEFEF";
         sciMode.style.color = "#000000"
 
-
         lastModeClicked = calcMode; // update the lastModeClicked variable
     });
 
+    let mq = window.matchMedia('(max-width: 992px)');
+    mq.addEventListener('change', showHideSciButtons);
+    showHideSciButtons(mq);
+
+    function showHideSciButtons(mq) {
+        const sciSwitchButtons = document.getElementById("scientific-switch");
+        if (mq.matches) {
+            sciSwitchButtons.classList.remove("d-none");
+            sciCalc.classList.add("d-none");
+            calc.classList.remove("d-none");
+            calcMode.style.backgroundColor = "#F0F8FF";
+            calcMode.style.color = "#0d6efd";
+            sciMode.style.backgroundColor = "#EFEFEF";
+            sciMode.style.color = "#000000";
+            sciEqual.classList.remove("d-none");
+            lastModeClicked = calcMode;
+        } else {
+            sciSwitchButtons.classList.add("d-none");
+            sciCalc.classList.remove("d-none");
+            calc.classList.remove("d-none");
+            sciEqual.classList.add("d-none");
+
+            lastModeClicked = calcMode;
+
+        }
+    }
 
     // Code to check if the inverse button has been clicked
 
@@ -420,146 +446,146 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// SUPPORTING FUNCTIONS
+    // SUPPORTING FUNCTIONS
 
-/*
-DEVELOPMENT ONLY PRODUCTIION REFACTOR NEEDED: 
-    - this currently uses eval which is not safe for production purporses
-*/
-function evaluateCalculation(calculation) {
-    let result = 0;
-    result = calculation
-        .replace("π", "Math.PI")
-        .replace("√", "Math.sqrt")
-        .replace("sin(", "Math.sin(")
-        .replace("tan(", "Math.tan(")
-        .replace("cos(", "Math.cos(")
-        .replace("sin-1(", "Math.asin(")
-        .replace("tan-1(", "Math.atan(")
-        .replace("cos-1(", "Math.acos(")
-        .replace("ln(", "Math.log(")
-        .replace("log(", "Math.log10(")
-        .replace("e", "Math.E")
-        .replace("EXP(", "Math.exp(")
+    /*
+    DEVELOPMENT ONLY PRODUCTIION REFACTOR NEEDED: 
+        - this currently uses eval which is not safe for production purporses
+    */
+    function evaluateCalculation(calculation) {
+        let result = 0;
+        result = calculation
+            .replace("π", "Math.PI")
+            .replace("√", "Math.sqrt")
+            .replace("sin(", "Math.sin(")
+            .replace("tan(", "Math.tan(")
+            .replace("cos(", "Math.cos(")
+            .replace("sin-1(", "Math.asin(")
+            .replace("tan-1(", "Math.atan(")
+            .replace("cos-1(", "Math.acos(")
+            .replace("ln(", "Math.log(")
+            .replace("log(", "Math.log10(")
+            .replace("e", "Math.E")
+            .replace("EXP(", "Math.exp(")
 
-    console.log(calculation);
-    result = eval(result)
-    return result;
-}
-
-// Used to update the the main calculator display
-function mainCalcDisplay(text) {
-
-    const display = document.getElementById('calc-display');
-    console.log("Screen Display: ", text)
-
-    if (typeof text !== 'string') {
-        text = String(text); // Convert text to a string if it's not already one
+        console.log(calculation);
+        result = eval(result)
+        return result;
     }
 
-    display.value = text
-    console.log(text)
+    // Used to update the the main calculator display
+    function mainCalcDisplay(text) {
 
-}
+        const display = document.getElementById('calc-display');
+        console.log("Screen Display: ", text)
 
-// Used to update the display of the calcuation tracker (the smaller display)
-function calcTrackDisplay(text) {
-
-    const display = document.getElementById('calc-track');
-    console.log("Calc Track: ", text)
-
-    if (typeof text !== 'string') {
-        text = String(text); // Convert text to a string if it's not already one
-    }
-
-    //   ************************************************
-    //   TESTING REQUIRED< ARE THESE NEEDED, NEED MORE?
-    display.value = text
-        .replace("Math.PI", "π")
-        .replace("Math.sqrt", "√");
-    console.log(text)
-}
-
-// Used to convert the text of a button into its mathematical equivalent with brackets
-// could be dropped for replace instead, or used within if statements. 
-function checkText(text) {
-
-    console.log("Screen Display: ", text)
-    console.log(text)
-
-    if (text == 'x') {
-        return '*';
-    } else if (text == '÷') {
-        return '/';
-    } else if (text == '%') {
-        return '*0.01';
-    } else if (text == 'Xy') {
-        return '**';
-    } else if (text == 'cos') {
-        return 'cos(';
-    } else if (text == 'tan') {
-        return 'tan(';
-    } else if (text == 'sin') {
-        return 'sin(';
-    } else if (text == 'cos-1') {
-        return 'cos-1(';
-    } else if (text == 'tan-1') {
-        return 'tan-1(';
-    } else if (text == 'sin-1') {
-        return 'sin-1(';
-    } else {
-        return text;
-    }
-}
-
-// add a bracket to a key
-function addBracketMult(prevButton, currentButton, calculation) {
-    if ((isNaN(prevButton))) {
-        calculation += `${currentButton}(`;
-        calcTrackDisplay(calculation)
-        mainCalcDisplay(`${currentButton}(`);
-    } else {
-        // if it is a number then multiply the current caclulation against 
-        result = evaluateCalculation(calculation);
-        // set the calculation to be the current result for the calculation * by 
-        calculation += `*${currentButton}(`;
-        calcTrackDisplay(calculation);
-        mainCalcDisplay(`${currentButton}(`);
-    }
-
-    return calculation;
-
-}
-
-// used to remove the last non integer value from the calculation where required
-function removeLastNonInteger(str) {
-    return str.replace(/[^0-9]$/, '');
-}
-
-// find the last integer value in the calculation
-function findLastInteger(str) {
-    const match = str.match(/(\d+)[^\d]*$/);
-    return match ? parseInt(match[1], 10) : null;
-}
-
-// remove the last integer value in the calculation
-function removeLastInteger(str) {
-    return str.replace(/\d+[^\d]*$/, '');
-}
-
-//   produce the factorial of a number
-function factorialise(num) {
-    //factorial of 1 and factorial of - is 1
-    if ((num == 0) || (num == 1)) {
-        return 1;
-    } else {
-        for (let i = num - 1; i > 0; i--) {
-            num = num * i;
+        if (typeof text !== 'string') {
+            text = String(text); // Convert text to a string if it's not already one
         }
-        return num
+
+        display.value = text
+        console.log(text)
+
     }
 
-}
+    // Used to update the display of the calcuation tracker (the smaller display)
+    function calcTrackDisplay(text) {
+
+        const display = document.getElementById('calc-track');
+        console.log("Calc Track: ", text)
+
+        if (typeof text !== 'string') {
+            text = String(text); // Convert text to a string if it's not already one
+        }
+
+        //   ************************************************
+        //   TESTING REQUIRED< ARE THESE NEEDED, NEED MORE?
+        display.value = text
+            .replace("Math.PI", "π")
+            .replace("Math.sqrt", "√");
+        console.log(text)
+    }
+
+    // Used to convert the text of a button into its mathematical equivalent with brackets
+    // could be dropped for replace instead, or used within if statements. 
+    function checkText(text) {
+
+        console.log("Screen Display: ", text)
+        console.log(text)
+
+        if (text == 'x') {
+            return '*';
+        } else if (text == '÷') {
+            return '/';
+        } else if (text == '%') {
+            return '*0.01';
+        } else if (text == 'Xy') {
+            return '**';
+        } else if (text == 'cos') {
+            return 'cos(';
+        } else if (text == 'tan') {
+            return 'tan(';
+        } else if (text == 'sin') {
+            return 'sin(';
+        } else if (text == 'cos-1') {
+            return 'cos-1(';
+        } else if (text == 'tan-1') {
+            return 'tan-1(';
+        } else if (text == 'sin-1') {
+            return 'sin-1(';
+        } else {
+            return text;
+        }
+    }
+
+    // add a bracket to a key
+    function addBracketMult(prevButton, currentButton, calculation) {
+        if ((isNaN(prevButton))) {
+            calculation += `${currentButton}(`;
+            calcTrackDisplay(calculation)
+            mainCalcDisplay(`${currentButton}(`);
+        } else {
+            // if it is a number then multiply the current caclulation against 
+            result = evaluateCalculation(calculation);
+            // set the calculation to be the current result for the calculation * by 
+            calculation += `*${currentButton}(`;
+            calcTrackDisplay(calculation);
+            mainCalcDisplay(`${currentButton}(`);
+        }
+
+        return calculation;
+
+    }
+
+    // used to remove the last non integer value from the calculation where required
+    function removeLastNonInteger(str) {
+        return str.replace(/[^0-9]$/, '');
+    }
+
+    // find the last integer value in the calculation
+    function findLastInteger(str) {
+        const match = str.match(/(\d+)[^\d]*$/);
+        return match ? parseInt(match[1], 10) : null;
+    }
+
+    // remove the last integer value in the calculation
+    function removeLastInteger(str) {
+        return str.replace(/\d+[^\d]*$/, '');
+    }
+
+    //   produce the factorial of a number
+    function factorialise(num) {
+        //factorial of 1 and factorial of - is 1
+        if ((num == 0) || (num == 1)) {
+            return 1;
+        } else {
+            for (let i = num - 1; i > 0; i--) {
+                num = num * i;
+            }
+            return num
+        }
+
+    }
 
 
 
@@ -567,4 +593,3 @@ function factorialise(num) {
 
 
 });
-
