@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (buttonText == "10x"){
 
                 console.log(buttonText);
-                buttonText = `10x?`
+                buttonText = `10^x?`
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     // if not a number just put log10 into equation
