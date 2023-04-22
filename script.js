@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // create a variable to use as a result (IS THIS NEEDED?)
             // let result
 
-            
+
             // Check for each of the current buttons being pressed
             if (buttonText == "=" && (lastButton != "=" && lastButton != "AC")) {
                 // evaluate the current calculation and store in result
@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (buttonText == "Ans") {
                 buttonText = ans;
                 mainCalcDisplay(`Ans: ${buttonText}`);
-                calculation+= buttonText
-                calcTrackDisplay(calculation);                
+                calculation += buttonText
+                calcTrackDisplay(calculation);
 
             } else if (buttonText == '√') {
                 // check if the last button was a number or not   
@@ -277,8 +277,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
-            
-            } else if (buttonText == "10x"){
+
+            } else if (buttonText == "10x") {
 
                 console.log(buttonText);
                 buttonText = `10^x?`
@@ -327,9 +327,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
 
-           
+
             lastButton = buttonText;
-    
+
             // to test lastbutton
             // console.log("last button was:", lastButton)
             // if (isNaN(lastButton)){
@@ -447,8 +447,8 @@ function evaluateCalculation(calculation) {
         .replace("log(", "Math.log10(")
         .replace("e", "Math.E")
         .replace("EXP(", "Math.exp(")
-    
-        console.log(calculation);
+
+    console.log(calculation);
     result = eval(result)
     return result;
 }
