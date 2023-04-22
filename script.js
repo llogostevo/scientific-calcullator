@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (buttonText == "10x"){
 
                 console.log(buttonText);
-                buttonText = `10<sup>X?</sup>`
+                buttonText = `10x?`
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     // if not a number just put log10 into equation
@@ -285,12 +285,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     // remove the last non integer from calculation
                     // display last integer as a sqaure
                     calculation += `10**`;
-                    calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
+
                 } else {
                     // set the calculation to be the current result for the calculation * 10x
                     calculation += `*10**`;
-                    calcTrackDisplay(calculation);
                 }
 
                 mainCalcDisplay(buttonText);
