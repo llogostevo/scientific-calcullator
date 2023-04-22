@@ -284,11 +284,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     //if not
                     // remove the last non integer from calculation
                     // display last integer as a sqaure
-                    calculation += `10**`;
+                    calculation += `*10**`;
 
                 } else {
                     // set the calculation to be the current result for the calculation * 10x
-                    calculation += `*10**`;
+                    calculation += `10**`;
                 }
 
                 mainCalcDisplay(buttonText);
