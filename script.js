@@ -1,12 +1,26 @@
 /*
 need to
-- RAD/DEG Appearance (see css file)
-- button to span two columns
-- RAD/DEG Toggle and action
-- Ans to multiply
-- try catch error messages as a popup above the calculator
 
-- make science buttons wrap properly (need to alter the way the bootstrap layout is appearing to do this. )
+- RAD/DEG Toggle
+ - implement rad / deg when toggled on and off
+
+ need to put in something so that math.sin is replace with the following when degrees is on
+ - math.sin(math.unit(90, 'deg'))
+
+use this approach
+
+if deg is true, and sin / tan / cos pressed
+
+convert value to radians, then put into  sin / tan / cos
+
+ function toRadians (angle) {
+  return angle * (Math.PI / 180);
+}
+
+- Ans to multiply
+
+
+- try catch error messages as a popup above the calculator
 
  - refactor code so its more readable   
 */
@@ -300,7 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 mainCalcDisplay(buttonText);
                 calcTrackDisplay(calculation);
 
-
             } else {
                 // update the calculation variable with the button data entry
                 // store the display of the calculator in variable
@@ -402,6 +415,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     }
+
+
+    // Code for the Toggle RAD and DEG Buttons
+        const radbutton1 = document.getElementById("rad-button");
+        const degbutton2 = document.getElementById("deg-button");
+        // set initial load so that rad is on as default start
+        let radDegFlag = "rad";
+
+        // event listener to toggle the rad button on and deg off
+        radbutton1.addEventListener("click", () => {
+            radbutton1.classList.add("active");
+            radbutton1.classList.remove("opacity-25");
+            radbutton1.classList.remove("text-black");
+            degbutton2.classList.remove("active");
+            degbutton2.classList.add("opacity-25");
+            degbutton2.classList.add("text-black");
+            radDegFlag = "rad";
+
+        });
+        
+        // event listener to toggle the rad off and deg on
+        degbutton2.addEventListener("click", () => {
+          degbutton2.classList.add("active");
+          degbutton2.classList.remove("opacity-25");
+          degbutton2.classList.remove("text-black");
+          radbutton1.classList.remove("active");
+          radbutton1.classList.add("opacity-25");
+          radbutton1.classList.add("text-black");
+          radDegFlag = "deg";
+          
+        });
 
     // Code to check if the inverse button has been clicked
 

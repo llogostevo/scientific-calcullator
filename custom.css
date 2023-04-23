@@ -34,9 +34,55 @@
     padding-bottom: 3px; */
   }
 
+  /* styling of the  */
   #rad {
     border-right: 1px;
     border-right-style: solid;
     border-right-color: darkgray;
     padding-right: 2px;
   }
+
+ /* grid container to apply bespoke grid to scientific buttons
+ used to overcome errors occuring with approach in bootstrap
+ ideally refactor the structure of the bootstrap html in future
+ so bespoke css not required. 
+ */
+
+
+
+
+ /* 4 columns for mobile view */
+  .grid-science-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr );
+    column-gap: 0.25rem;
+}
+
+.sci-calculator {
+  margin: 0px;
+}
+.grid-item-double {
+    grid-column: span 2;
+}
+
+/* breakpoint to flip into 3 columns for desktop view */
+@media (min-width: 992px) {
+    .grid-science-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-item-double {
+        grid-column: span 2;
+    }
+
+    /* 2 columns for mobile view */
+    .grid-calculator-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 0.25rem;
+    }
+}
+
+/* CSS TO STYLE RAD/DEG Button */
+
+

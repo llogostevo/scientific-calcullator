@@ -29,196 +29,232 @@
                                     class="m-1 mb-0 form-control form-control-lg border-0 text-end" type="text">
                             </div>
                         </div>
-                    
-                        <!-- HERE THE BUTTONS DONT FLEX INTO ROWS 
-                        NEED TO ADD IN <div class="col-3 "> and 
-                            to revert back 
-                        
-                        -->
-                    <div class="row">
-                        <!-- SCIENTIFIC CALCULATOR -->
-                        <div class="sci-calculator-buttons col-lg-6 row gx-1 d-none" id="sci-calc">
-                            <div class="row row-col-3">
-                                <button
-                                    id="rad-deg-button" class="btn col btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    <span id="rad">RAD</span> <span id="deg">DEG</span>
-                                </button>
-                                <button
-                                    class="non-inverse col btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    sin
-                                </button>
-                                <button
-                                    class="inverse d-none col btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    sin<sup>-1</sup>
-                                </button>
-                                <button
-                                    class="non-inverse btn col btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+
+                        <!-- container to split the buttons on two sides, uses custom css and grid -->
+                        <div class="grid-calculator-container">
+                        <!-- SCIENTIFIC CALCULATOR -->          
+                        <div class="col-12"> 
+                            <!-- grid container to control the wrapping of buttons using custom css and grid -->
+                            <!-- also uses a js event handler to alter appearance on screen size change and on click of scientific switch in mobile view -->
+                            <div class="sci-calculator-buttons  d-none grid-science-container" id="sci-calc">
+                                <!-- button spans two columns using grid -->
+                                    <!-- used to toggle between rad and deg modes -->
+                                        <div class="grid-item-double btn-group">
+                                            <button id="rad-button" class="active btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">RAD</button>
+                                            <button id="deg-button" class ="btn btn-secondary opacity-25 text-black mb-3 w-100 mt-2 border sci-calculator calculatorButton">DEG</button>
+                                        </div>
+                                <div class="grid-item">
+                                    <button
+                                        class="btn btn-secondary  mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        x!
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- used to inverse, JS script applied to hide the non inverse buttons and show the inverse buttons -->
+                                    <button id="inv-button"
+                                        class="btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        Inv
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        sin
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        sin<sup>-1</sup>
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse btn   btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        ln
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none   btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        e<sup>x</sup>
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <button
+                                        class="btn btn-secondary  mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        &pi;
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        cos
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        cos<sup>-1</sup>
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                    class="non-inverse btn  btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
                                     log
-                                </button>
-                                <button
-                                    class="inverse d-none col btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    10<sup>x</sup>
-                                </button>
-                                <button
-                                    class="non-inverse btn col btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    Ans
-                                </button>
-                                <button
-                                    class="inverse d-none col  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    Rnd
-                                </button>
-                            <!-- </div> -->
-                            <!-- <div class="col-3 "> -->
-                                <button
-                                    class="btn btn-secondary col mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    DEG
-                                </button>
-                                <button
-                                    class="non-inverse btn col  btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    ln
-                                </button>
-                                <button
-                                    class="inverse d-none col  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    e<sup>x</sup>
-                                </button>
-                                <button
-                                    class="btn btn-secondary col mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    e
-                                </button>
-                                <button
-                                    class="btn btn-secondary col mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    EXP
-                                </button>
-                            <!-- </div> -->
-                            <!-- <div class="col-3 "> -->
-                                <button
-                                    class="btn btn-secondary col mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    x!
-                                </button>
-                                <button
-                                    class="btn btn-secondary col mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    &pi;
-                                </button>
-                                <button
-                                    class="non-inverse col btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    tan
-                                </button>
-                                <button
-                                    class="inverse d-none col  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    tan<sup>-1</sup>
-                                </button>
-                                <button
-                                    class="non-inverse btn col btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    X<sup>y</sup>
-                                </button>
-                                <button
-                                    class="inverse d-none col  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    <sup>y</sup>&radic;x
-                                </button>
-                            <!-- </div> -->
-                            <!-- <div class="col-3  "> -->
-                                <button id="inv-button"
-                                    class="btn btn-secondary col  mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    Inv
-                                </button>
-                                <button
-                                    class="non-inverse col  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    cos
-                                </button>
-                                <button
-                                    class="inverse d-none col  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    cos<sup>-1</sup>
-                                </button>
-                                <button
-                                    class="non-inverse btn col  btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    &radic;
-                                </button>
-                                <button
-                                    class="inverse d-none col   btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
-                                    x<sup>2</sup>
-                                </button>
-                                <button id="sci-equals" class="col btn btn-primary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    =
-                                </button>
-
-
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        10<sup>x</sup>
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <button
+                                        class="btn btn-secondary  mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        e
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse  btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        tan
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none   btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        tan<sup>-1</sup>
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        &radic;
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        x<sup>2</sup>
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse btn  btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        Ans
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none   btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        Rnd
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <button
+                                        class="btn btn-secondary  mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        EXP
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <!-- note the non inverse class here -->
+                                    <button
+                                        class="non-inverse btn  btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        X<sup>y</sup>
+                                    </button>
+                                    <!-- note the inverse class here -->
+                                    <button
+                                        class="inverse d-none   btn btn-secondary mb-3 w-100 mt-2 border sci-calculator calculatorButton">
+                                        <sup>y</sup>&radic;x
+                                    </button>
+                                </div>
+                                <div class="grid-item">
+                                    <button id="sci-equals"
+                                        class=" btn btn-primary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        =
+                                    </button>
+                                </div>
                             </div>
-
                         </div>
                         <!-- NORMAL CALCULATOR -->
-                        <div class="calculator-buttons col-lg-6 row gx-1" id="calc">
-                            <div class="col-3 ">
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    &#40;
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    7
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    4
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    1
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    0
-                                </button>
-                            </div>
-                            <div class="col-3 ">
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    &#41;
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    8
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    5
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    2
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    .
-                                </button>
-                            </div>
-                            <div class="col-3 ">
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    %
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    9
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    6
-                                </button>
-                                <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    3
-                                </button>
-                                <button class="btn btn-primary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    =
-                                </button>
-                            </div>
-                            <div class="col-3 ">
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    AC
-                                </button>
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    &divide;
-                                </button>
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    x
-                                </button>
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    -
-                                </button>
-                                <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
-                                    +
-                                </button>
+                        <div class="col-12 ">
+                            <div class="calculator-buttons row gx-1" id="calc">
+                                <div class="col-3 ">
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        &#40;
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        7
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        4
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        1
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        0
+                                    </button>
+                                </div>
+                                <div class="col-3 ">
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        &#41;
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        8
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        5
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        2
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        .
+                                    </button>
+                                </div>
+                                <div class="col-3 ">
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        %
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        9
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        6
+                                    </button>
+                                    <button class="btn btn-light mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        3
+                                    </button>
+                                    <button class="btn btn-primary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        =
+                                    </button>
+                                </div>
+                                <div class="col-3 ">
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        AC
+                                    </button>
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        &divide;
+                                    </button>
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        x
+                                    </button>
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        -
+                                    </button>
+                                    <button class="btn btn-secondary mb-3 w-100 mt-2 border calculator calculatorButton">
+                                        +
+                                    </button>
+                                </div>
+                                <!-- END OF CALC BUTTONS -->
                             </div>
                         </div>
-                        <!-- END OF CALC BUTTONS -->
-                        </div>
-                        <!-- BUTTON SWITCH MOBILE VIEW NEEDED IN HERE-->
+                    </div>
+                        <!-- BUTTON SWITCH MOBILE VIEW -->
+                        <!-- uses JS event handler to switch between the buttons -->
                         <div id="scientific-switch" class="d-flex mode-buttons gap-0">
                             <button class="mode-button" id="calc-mode">123</button>
                             <button class="mode-button" id="sci-mode">Fx</button>
@@ -228,7 +264,8 @@
             </div>
         </div>
     </div>
-    </div>
+   
+
     <!-- </div> -->
 
 
