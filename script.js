@@ -1,24 +1,10 @@
 /*
-need to
+FURTHER DEVELOPMENTS
 
-- RAD/DEG Toggle
- - implement rad / deg when toggled on and off
-
- need to put in something so that math.sin is replace with the following when degrees is on
+asin/acos/atan in degrees potentially not working
  - math.sin(math.unit(90, 'deg'))
 
-use this approach
-
-if deg is true, and sin / tan / cos pressed
-
-convert value to radians, then put into  sin / tan / cos
-
- function toRadians (angle) {
-  return angle * (Math.PI / 180);
-}
-
-- Ans to multiply
-
+- Ans doesn't multiply when applied to another number without a digit, also digits afterwards are appending to ANS
 
 - try catch error messages as a popup above the calculator
 
@@ -314,6 +300,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 mainCalcDisplay(buttonText);
                 calcTrackDisplay(calculation);
 
+            } else if (buttonText == "Rad" || buttonText == "Deg") {
+                // used to remove rad / deg text from calculation
+                // set the current button text to match the last button for the next click event i.e remove rad/deg as the last button clicked
+                buttonText = lastButton;
+
             } else {
                 // update the calculation variable with the button data entry
                 // store the display of the calculator in variable
@@ -328,13 +319,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     // if the button was a number but then previous value was an operator it will wipe screen and put new number
                     // if button pressed wasn't a number the screen will be wiped with the operator value in place
                     console.log("calc: ", calculation)
+                    if (((lastButton == "sin(") || (lastButton == "cos(") || (lastButton == "tan(") || (lastButton == "sin-1(") || (lastButton == "cos-1(") || (lastButton == "tan-1(")) && (degFlag == true)) {
+                        calculation += "deg"
+
+                        // IN HERE COULD USE FOLLOWING INSTEAD
+                        /*
+                        sin(math.unit(90, 'deg'))
+                         */
+                    }
                     // display the button pressed in the calculator
                     mainCalcDisplay(buttonText);
                     calculation += buttonText;
                     // display the current calculation in the smaller display
                     calcTrackDisplay(calculation);
                 } else {
-                    // used to ensure numbers are increased in display instead of being wiped
+                    // used to ensure numbers are increased in display instead of being wiped   
                     currentDisplay.value = currentDisplay.value + buttonText;
                     calculation += buttonText;
                     calcTrackDisplay(calculation);
@@ -418,34 +417,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // Code for the Toggle RAD and DEG Buttons
-        const radbutton1 = document.getElementById("rad-button");
-        const degbutton2 = document.getElementById("deg-button");
-        // set initial load so that rad is on as default start
-        let radDegFlag = "rad";
+    const radbutton1 = document.getElementById("rad-button");
+    const degbutton2 = document.getElementById("deg-button");
+    // set initial load so that rad is on as default start
+    let degFlag = false;
 
-        // event listener to toggle the rad button on and deg off
-        radbutton1.addEventListener("click", () => {
-            radbutton1.classList.add("active");
-            radbutton1.classList.remove("opacity-25");
-            radbutton1.classList.remove("text-black");
-            degbutton2.classList.remove("active");
-            degbutton2.classList.add("opacity-25");
-            degbutton2.classList.add("text-black");
-            radDegFlag = "rad";
+    // event listener to toggle the rad button on and deg off
+    radbutton1.addEventListener("click", () => {
+        radbutton1.classList.add("active");
+        radbutton1.classList.remove("opacity-25");
+        radbutton1.classList.remove("text-black");
+        degbutton2.classList.remove("active");
+        degbutton2.classList.add("opacity-25");
+        degbutton2.classList.add("text-black");
+        degFlag = false;
 
-        });
-        
-        // event listener to toggle the rad off and deg on
-        degbutton2.addEventListener("click", () => {
-          degbutton2.classList.add("active");
-          degbutton2.classList.remove("opacity-25");
-          degbutton2.classList.remove("text-black");
-          radbutton1.classList.remove("active");
-          radbutton1.classList.add("opacity-25");
-          radbutton1.classList.add("text-black");
-          radDegFlag = "deg";
-          
-        });
+    });
+
+    // event listener to toggle the rad off and deg on
+    degbutton2.addEventListener("click", () => {
+        degbutton2.classList.add("active");
+        degbutton2.classList.remove("opacity-25");
+        degbutton2.classList.remove("text-black");
+        radbutton1.classList.remove("active");
+        radbutton1.classList.add("opacity-25");
+        radbutton1.classList.add("text-black");
+        degFlag = true;
+
+    });
 
     // Code to check if the inverse button has been clicked
 
@@ -504,18 +503,25 @@ document.addEventListener("DOMContentLoaded", function () {
         result = calculation
             .replace("π", "Math.PI")
             .replace("√", "Math.sqrt")
+            .replace("ln(", "Math.log(")
+            .replace("log(", "Math.log10(")
+            .replace("EXP(", "Math.exp(")
+            .replace("sin(deg", "sin((Math.PI / 180)*") // order of these is important, sin will be replaced further down
+            .replace("tan(deg", "tan((Math.PI / 180)*")
+            .replace("cos(deg", "cos((Math.PI / 180)*")
+            .replace("sin-1(deg", "(180 / Math.PI)*sin-1((Math.PI / 180)*")
+            .replace("tan-1(deg", "(180 / Math.PI)*tan-1((Math.PI / 180)*")
+            .replace("cos-1(deg", "(180 / Math.PI)*cos-1((Math.PI / 180)*")
+            .replace("e", "Math.E")
             .replace("sin(", "Math.sin(")
             .replace("tan(", "Math.tan(")
             .replace("cos(", "Math.cos(")
             .replace("sin-1(", "Math.asin(")
             .replace("tan-1(", "Math.atan(")
             .replace("cos-1(", "Math.acos(")
-            .replace("ln(", "Math.log(")
-            .replace("log(", "Math.log10(")
-            .replace("e", "Math.E")
-            .replace("EXP(", "Math.exp(")
 
-        console.log(calculation);
+
+        console.log("calc:, ", result);
         result = eval(result)
         return result;
     }
