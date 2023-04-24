@@ -509,9 +509,9 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace("sin(deg", "sin((Math.PI / 180)*") // order of these is important, sin will be replaced further down
             .replace("tan(deg", "tan((Math.PI / 180)*")
             .replace("cos(deg", "cos((Math.PI / 180)*")
-            .replace("sin-1(deg", "(180 / Math.PI)*sin-1((Math.PI / 180)*")
-            .replace("tan-1(deg", "(180 / Math.PI)*tan-1((Math.PI / 180)*")
-            .replace("cos-1(deg", "(180 / Math.PI)*cos-1((Math.PI / 180)*")
+            .replace("sin-1(deg", "(180 / Math.PI)*sin-1(")
+            .replace("tan-1(deg", "(180 / Math.PI)*tan-1(")
+            .replace("cos-1(deg", "(180 / Math.PI)*cos-1(")
             .replace("e", "Math.E")
             .replace("sin(", "Math.sin(")
             .replace("tan(", "Math.tan(")
@@ -520,7 +520,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace("tan-1(", "Math.atan(")
             .replace("cos-1(", "Math.acos(")
 
-
+            (180 / Math.PI)*Math.acos((Math.PI / 180)*
         console.log("calc:, ", result);
         result = eval(result)
         return result;
