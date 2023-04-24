@@ -1,14 +1,11 @@
 /*
 FURTHER DEVELOPMENTS
 
-asin/acos/atan in degrees potentially not working
- - math.sin(math.unit(90, 'deg'))
-
 - Ans doesn't multiply when applied to another number without a digit, also digits afterwards are appending to ANS
 
 - try catch error messages as a popup above the calculator
 
- - refactor code so its more readable   
+ - refactor code so its more readable and reduce repeated code
 */
 
 
@@ -82,10 +79,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     calcTrackDisplay(calculation)
                     mainCalcDisplay(`${buttonText}(`);
                 } else {
-                    // if it is a number then multiply the current caclulation against pi
+                    // if it is a number then multiply the current caclulation against the square root
                     console.log("display");
                     result = evaluateCalculation(calculation);
-                    // set the calculation to be the current result for the calculation * by pi
+                    // set the calculation to be the current result for the calculation * square root
                     calculation += `*${buttonText}(`;
                     calcTrackDisplay(calculation);
                     mainCalcDisplay(`${buttonText}(`);
@@ -129,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (buttonText == "Inv") {
                 // just used for log purposes currently
                 console.log("Inverse Mode")
-                // IN HERE PUT THE POPUP IN BOOTSTRAP SO CAN BE SEEN INVERSE MODE IS SET
+                
 
             } else if (buttonText == "Rnd") {
                 let random = Math.random();
@@ -187,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(buttonText)
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
-                    // if not a number just put log10 into equation
+                    // if not a number just put log into equation
                     console.log(lastButton);
                     calculation += `${buttonText}(`;
                     calcTrackDisplay(calculation)
@@ -264,11 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
-                    // if not a number just put log10 into equation
-                    //if not
                     // remove the last non integer from calculation
                     calculation = removeLastNonInteger(calculation)
-                    //get the last integer
                 }
 
                 let x = findLastInteger(calculation);
@@ -286,14 +280,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 buttonText = `10^x?`
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
-                    // if not a number just put log10 into equation
-                    //if not
-                    // remove the last non integer from calculation
-                    // display last integer as a sqaure
+                    // set the calculation to be the current result for the calculation * 10x
                     calculation += `*10**`;
 
                 } else {
-                    // set the calculation to be the current result for the calculation * 10x
+                    // 10x is applied on its own
                     calculation += `10**`;
                 }
 
@@ -322,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (((lastButton == "sin(") || (lastButton == "cos(") || (lastButton == "tan(") || (lastButton == "sin-1(") || (lastButton == "cos-1(") || (lastButton == "tan-1(")) && (degFlag == true)) {
                         calculation += "deg"
 
-                        // IN HERE COULD USE FOLLOWING INSTEAD
+                        // IN HERE COULD USE FOLLOWING INSTEAD - refactor opportunity
                         /*
                         sin(math.unit(90, 'deg'))
                          */
@@ -520,8 +511,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace("tan-1(", "Math.atan(")
             .replace("cos-1(", "Math.acos(")
 
-            (180 / Math.PI)*Math.acos((Math.PI / 180)*
-        console.log("calc:, ", result);
+            console.log("calc:, ", result);
         result = eval(result)
         return result;
     }
