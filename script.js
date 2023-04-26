@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
         lastModeClicked = calcMode; // update the lastModeClicked variable
     });
 
-    let mq = window.matchMedia('(max-width: 992px)');
+    let mq = window.matchMedia('(max-width: 993px)');
     mq.addEventListener('change', showHideSciButtons);
     showHideSciButtons(mq);
 
