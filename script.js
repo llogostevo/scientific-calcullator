@@ -494,8 +494,8 @@ document.addEventListener("DOMContentLoaded", function () {
         result = calculation
             .replace("π", "Math.PI")
             .replace("√", "Math.sqrt")
-            .replace("ln(", "Math.log(")
             .replace("log(", "Math.log10(")
+            .replace("ln(", "Math.log(")
             .replace("EXP(", "Math.exp(")
             .replace("sin(deg", "sin((Math.PI / 180)*") // order of these is important, sin will be replaced further down
             .replace("tan(deg", "tan((Math.PI / 180)*")
