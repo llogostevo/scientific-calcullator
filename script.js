@@ -632,20 +632,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // USED TO REMOVE THE BORDER AND TOPS FROM BUTTONS
-    // NEED TO MANUALLY REMOVE THIS FROM THE HTML
-    // const buttonTag = document.getElementsByTagName('button');
-    // const buttonArray = Array.from(buttonTag);
-
-
-    // buttonArray.forEach(e => {
-    //     e.classList.remove('mt-2');
-    //     e.classList.remove('mb-3');
-        
-    //   });
-
-
-
-
-
 });
