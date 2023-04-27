@@ -3,6 +3,8 @@ FURTHER DEVELOPMENTS
 
 - Ans doesn't multiply when applied to another number without a digit, also digits afterwards are appending to ANS
 
+- CE button to be implemnted
+
 - try catch error messages as a popup above the calculator
 
  - refactor code so its more readable and reduce repeated code
@@ -378,8 +380,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         lastModeClicked = calcMode; // update the lastModeClicked variable
     });
-
-    let mq = window.matchMedia('(max-width: 992px)');
+//triggers 1px before the media quer in css
+    let mq = window.matchMedia('(max-width: 991px)');
     mq.addEventListener('change', showHideSciButtons);
     showHideSciButtons(mq);
 
@@ -400,7 +402,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sciCalc.classList.remove("d-none");
             calc.classList.remove("d-none");
             sciEqual.classList.add("d-none");
-
             lastModeClicked = calcMode;
 
         }
@@ -420,23 +421,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (degFlag == false) {
             degbutton2.classList.remove("text-secondary");
             radbutton1.classList.add("text-secondary");
-            // degbutton2.classList.add("active");
-            // degbutton2.classList.remove("opacity-25");
-            // degbutton2.classList.remove("text-black");
-            // radbutton1.classList.remove("active");
-            // radbutton1.classList.add("opacity-25");
-            // radbutton1.classList.add("text-black");
             degFlag = true;
 
         } else if (degFlag == true){
             radbutton1.classList.remove("text-secondary");
             degbutton2.classList.add("text-secondary");
-            // radbutton1.classList.add("active");
-            // radbutton1.classList.remove("opacity-25");
-            // radbutton1.classList.remove("text-black");
-            // degbutton2.classList.remove("active");
-            // degbutton2.classList.add("opacity-25");
-            // degbutton2.classList.add("text-black");
             degFlag = false;
         }
 
