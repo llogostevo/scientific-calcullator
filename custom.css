@@ -1,9 +1,17 @@
-.btn-custom:hover,
-    .btn-custom:focus,
-    .btn-custom:active {
-      background-color: rgba(0, 123, 255, 0.75);
-      border-color: rgba(0, 123, 255, 0.75);
+/* overide bootstrap color  */
+.sci-calculator-buttons button:not(.equals-button), #rad-button, #deg-button, .btn-secondary {
+      background-color: rgba(218, 220, 224);
+      color: rgba(32, 33, 36);
     }
+
+.calculator-buttons button:not(.equals-button) {
+      color: rgba(32, 33, 36);
+    }
+
+/* overide the bootstrap color for equals to match color from google */
+.equals-button {
+  background-color: #4285f4;
+}
 
 /* calc and sci buttons */
 #calc-mode {
@@ -31,15 +39,6 @@
 
   margin-right: 0;
 }
-
-#rad-deg-button {
-    /* border: 0;
-    margin-right: 0;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 3px;
-    padding-bottom: 3px; */
-  }
 
   /* styling of the  */
   #rad {
