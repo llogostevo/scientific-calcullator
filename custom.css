@@ -4,6 +4,14 @@ body {
 
 }
 
+/* reduced button size to 15px so inverse works in mobile view */
+.btn {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+}
+
+
+
 /* overide bootstrap color  */
 .sci-calculator-buttons button:not(.equals-button), #rad-button, #deg-button, .btn-secondary {
       background-color: rgba(218, 220, 224);
