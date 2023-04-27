@@ -1,3 +1,9 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+
+}
+
 /* overide bootstrap color  */
 .sci-calculator-buttons button:not(.equals-button), #rad-button, #deg-button, .btn-secondary {
       background-color: rgba(218, 220, 224);
@@ -54,14 +60,12 @@
  so bespoke css not required. 
  */
 
-
-
-
  /* 4 columns for mobile view */
   .grid-science-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr );
-    column-gap: 0.25rem;
+    column-gap: 0.5rem !important;
+    row-gap: 0.5rem !important;
 }
 
 .sci-calculator {
@@ -85,10 +89,13 @@
     .grid-calculator-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      column-gap: 0.25rem;
+      column-gap: 0.5rem;
+      row-gap: 0.5rem;
     }
 }
 
-/* CSS TO STYLE RAD/DEG Button */
 
-
+/* COULD BE USED TO STYLE A BORDER BETWEEN RAD AND DEG */
+/* .rad-deg-middle-border {
+  
+} */

@@ -11,7 +11,7 @@ FURTHER DEVELOPMENTS
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Document is Ready");
-
+        
     // set variable to track a calculator button click
     const calculatorButtons = document.querySelectorAll('.calculatorButton');
 
@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", function () {
         lastModeClicked = calcMode; // update the lastModeClicked variable
     });
 
-    let mq = window.matchMedia('(max-width: 993px)');
+    let mq = window.matchMedia('(max-width: 992px)');
     mq.addEventListener('change', showHideSciButtons);
     showHideSciButtons(mq);
 
@@ -410,32 +410,39 @@ document.addEventListener("DOMContentLoaded", function () {
     // Code for the Toggle RAD and DEG Buttons
     const radbutton1 = document.getElementById("rad-button");
     const degbutton2 = document.getElementById("deg-button");
+    const radDegbutton = document.getElementById("rad-deg-button");
     // set initial load so that rad is on as default start
     let degFlag = false;
 
     // event listener to toggle the rad button on and deg off
-    radbutton1.addEventListener("click", () => {
-        radbutton1.classList.add("active");
-        radbutton1.classList.remove("opacity-25");
-        radbutton1.classList.remove("text-black");
-        degbutton2.classList.remove("active");
-        degbutton2.classList.add("opacity-25");
-        degbutton2.classList.add("text-black");
-        degFlag = false;
+    radDegbutton.addEventListener("click", () => {
+
+        if (degFlag == false) {
+            degbutton2.classList.remove("text-secondary");
+            radbutton1.classList.add("text-secondary");
+            // degbutton2.classList.add("active");
+            // degbutton2.classList.remove("opacity-25");
+            // degbutton2.classList.remove("text-black");
+            // radbutton1.classList.remove("active");
+            // radbutton1.classList.add("opacity-25");
+            // radbutton1.classList.add("text-black");
+            degFlag = true;
+
+        } else if (degFlag == true){
+            radbutton1.classList.remove("text-secondary");
+            degbutton2.classList.add("text-secondary");
+            // radbutton1.classList.add("active");
+            // radbutton1.classList.remove("opacity-25");
+            // radbutton1.classList.remove("text-black");
+            // degbutton2.classList.remove("active");
+            // degbutton2.classList.add("opacity-25");
+            // degbutton2.classList.add("text-black");
+            degFlag = false;
+        }
+
 
     });
 
-    // event listener to toggle the rad off and deg on
-    degbutton2.addEventListener("click", () => {
-        degbutton2.classList.add("active");
-        degbutton2.classList.remove("opacity-25");
-        degbutton2.classList.remove("text-black");
-        radbutton1.classList.remove("active");
-        radbutton1.classList.add("opacity-25");
-        radbutton1.classList.add("text-black");
-        degFlag = true;
-
-    });
 
     // Code to check if the inverse button has been clicked
 
@@ -451,12 +458,17 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Inverse Clicked");
 
         // change the background of the inverse toggle button to show it is toggled on or off
+        // uses the secondary class to check if on or off
+        // this could be refactored with a flag rather than the secondary check. 
         if (inverse.classList.contains("btn-secondary")) {
             inverse.classList.remove("btn-secondary");
             inverse.classList.add("btn-light");
+            inverse.classList.add("border-dark");
         } else {
             inverse.classList.add("btn-secondary");
             inverse.classList.remove("btn-light");
+            inverse.classList.remove("border-dark");
+
         }
 
 
@@ -486,7 +498,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // SUPPORTING FUNCTIONS
 
     /*
-    DEVELOPMENT ONLY PRODUCTIION REFACTOR NEEDED: 
+    DEVELOPMENT ONLY - PRODUCTIION REFACTOR NEEDED: 
         - this currently uses eval which is not safe for production purporses
     */
     function evaluateCalculation(calculation) {
@@ -494,16 +506,16 @@ document.addEventListener("DOMContentLoaded", function () {
         result = calculation
             .replace("π", "Math.PI")
             .replace("√", "Math.sqrt")
-            .replace("log(", "Math.log10(")
+            .replace("log(", "Math.log10(") // order important to not impact ln
             .replace("ln(", "Math.log(")
             .replace("EXP(", "Math.exp(")
-            .replace("sin(deg", "sin((Math.PI / 180)*") // order of these is important, sin will be replaced further down
+            .replace("sin(deg", "sin((Math.PI / 180)*") // order of these is important, sin/cos/tan will be replaced further down
             .replace("tan(deg", "tan((Math.PI / 180)*")
             .replace("cos(deg", "cos((Math.PI / 180)*")
-            .replace("sin-1(deg", "(180 / Math.PI)*sin-1(")
+            .replace("sin-1(deg", "(180 / Math.PI)*sin-1(") // order of these is important, sin-1/cos-1/tan-1 will be replaced further down
             .replace("tan-1(deg", "(180 / Math.PI)*tan-1(")
             .replace("cos-1(deg", "(180 / Math.PI)*cos-1(")
-            .replace("e", "Math.E")
+            .replace("e", "Math.E") // order important to not impact exp
             .replace("sin(", "Math.sin(")
             .replace("tan(", "Math.tan(")
             .replace("cos(", "Math.cos(")
@@ -550,7 +562,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Used to convert the text of a button into its mathematical equivalent with brackets
-    // could be dropped for replace instead, or used within if statements. 
+ 
     function checkText(text) {
 
         console.log("Screen Display: ", text)
@@ -581,7 +593,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // add a bracket to a key
+    // add a bracket to a key (NOT IN USE: Needs to be refactored as all have slight differences in approach)
     function addBracketMult(prevButton, currentButton, calculation) {
         if ((isNaN(prevButton))) {
             calculation += `${currentButton}(`;
@@ -616,7 +628,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return str.replace(/\d+[^\d]*$/, '');
     }
 
-    //   produce the factorial of a number
+    //   produce the factorial of a number for X! button
     function factorialise(num) {
         //factorial of 1 and factorial of - is 1
         if ((num == 0) || (num == 1)) {
@@ -630,6 +642,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+
+    // USED TO REMOVE THE BORDER AND TOPS FROM BUTTONS
+    // NEED TO MANUALLY REMOVE THIS FROM THE HTML
+    // const buttonTag = document.getElementsByTagName('button');
+    // const buttonArray = Array.from(buttonTag);
+
+
+    // buttonArray.forEach(e => {
+    //     e.classList.remove('mt-2');
+    //     e.classList.remove('mb-3');
+        
+    //   });
 
 
 
