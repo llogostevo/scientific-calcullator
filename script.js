@@ -1,6 +1,9 @@
 /*
 FURTHER DEVELOPMENTS
 
+- hovers in place on normal buttons but not on sci buttons
+- using bootstrap buttons but then overidden with Js, so obsolete code in places needs removing
+
 - Ans doesn't multiply when applied to another number without a digit, also digits afterwards are appending to ANS
 
 - CE button to be implemnted
