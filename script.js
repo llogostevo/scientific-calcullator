@@ -1,7 +1,7 @@
 /*
 FURTHER DEVELOPMENTS
 
-- 0 default
+- 0 default - LINE 268, bug still, not showing ans for 0
 
 - number issue where number needs to reset after certain buttons
 
