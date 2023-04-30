@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastButton = "AC"
     // set a variable to track the last answer for the ans button
     let ans = 0;
+
+    let startFlag = true;
+
     // Listen for calculator button press
     // for each button listen to a press
     calculatorButtons.forEach(button => {
@@ -62,11 +65,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 calcTrackDisplay("Ans: " + ans);
                 // reset the value in calculation to start again
                 calculation = "";
-                // Check ti see if last button was an = or AC so that screen starts again prir to a number input. 
+                startFlag = true;
+                // Check to see if last button was an = or AC so that screen starts again prir to a number input. 
             } else if (buttonText == "=" && (lastButton == "=" || lastButton == "AC")) {
                 mainCalcDisplay("");
                 calcTrackDisplay("");
                 calculation = "";
+                startFlag = true;
             } else if (buttonText == "AC") {
                 // reset the calculation to start again
                 calculation = "";
@@ -74,11 +79,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 mainCalcDisplay("");
                 // set the tracking display to be AC to show reset
                 calcTrackDisplay("AC");
+                startFlag = true;
             } else if (buttonText == "Ans") {
                 buttonText = ans;
                 mainCalcDisplay(`Ans: ${buttonText}`);
                 calculation += buttonText
                 calcTrackDisplay(calculation);
+                startFlag = false;
 
             } else if (buttonText == '√') {
                 // check if the last button was a number or not   
@@ -87,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     calculation += `${buttonText}(`;
                     calcTrackDisplay(calculation)
                     mainCalcDisplay(`${buttonText}(`);
+
                 } else {
                     // if it is a number then multiply the current caclulation against the square root
                     console.log("display");
@@ -96,6 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     calcTrackDisplay(calculation);
                     mainCalcDisplay(`${buttonText}(`);
                 }
+
+                startFlag = false;
+
             } else if (buttonText == 'π') {
 
                 //check if the last button was a number or not   
@@ -113,10 +124,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     calcTrackDisplay(calculation);
                 }
 
+                startFlag = false;
 
             } else if (buttonText == "x!") {
                 let lastNum = 0;
-                if ((isNaN(lastButton))) {
+                if (startFlag) {
+                    mainCalcDisplay(`${String(0)}!`);
+                    lastNum = factorialise(lastNum);
+                    
+                } else if ((isNaN(lastButton))) {
                     // remove the last non integer from calculation
                     calculation = removeLastNonInteger(calculation)
 
@@ -131,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 calculation = removeLastInteger(calculation);
                 calculation += String(lastNum);
                 calcTrackDisplay(calculation);
+                startFlag = false;
 
             } else if (buttonText == "Inv") {
                 // just used for log purposes currently
@@ -152,6 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 // display the calculation to the tracker
                 calcTrackDisplay(calculation);
+                startFlag = false;
 
 
             } else if (buttonText == "ln") {
@@ -170,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     calculation += `*${buttonText}(`;
                     calcTrackDisplay(calculation);
                 }
+                startFlag = false;
 
             } else if (buttonText=="ex") {
             
@@ -189,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
                    calculation += `*${buttonText}`;
                    calcTrackDisplay(calculation);
                 }
-            
+                startFlag = false;
 
             } else if (buttonText == "e") {
                 console.log(buttonText)
@@ -208,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     calcTrackDisplay(calculation);
                 }
 
+                startFlag = false;
 
             } else if (buttonText == "log") {
                 console.log(buttonText)
@@ -225,6 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     calculation += `*${buttonText}(`;
                     calcTrackDisplay(calculation);
                 }
+                startFlag = false;
 
             } else if (buttonText == "EXP") {
                 console.log(buttonText)
@@ -242,19 +263,30 @@ document.addEventListener("DOMContentLoaded", function () {
                     calculation += `*${buttonText}(`;
                     calcTrackDisplay(calculation);
                 }
+                startFlag = false;
 
             } else if (buttonText == "x2") {
+
+                // THIS is NOT WORKING FOR 0
                 console.log(buttonText)
 
                 let lastNum = 0;
+
+                if (startFlag){
+                    calculation = 0;
+                    calcTrackDisplay(calculation);
+                } else if ((isNaN(lastButton))) {
                 //check if the last button is a number or not
-                if ((isNaN(lastButton))) {
                     //if not
                     // remove the last non integer from calculation
                     calculation = removeLastNonInteger(calculation)
                 }
-                //get the last integer
-                lastNum = findLastInteger(calculation)
+
+                if (calculation!=0) {
+                     //get the last integer
+                    lastNum = findLastInteger(calculation)
+                }
+               
                 //display last integer as a sqaure
                 mainCalcDisplay(`${String(lastNum)}**2`);
                 //claculate the square
@@ -265,6 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 calculation += String(lastNum);
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
+                startFlag = false;
 
             } else if (buttonText == "Xy") {
                 console.log(buttonText)
@@ -284,6 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
+                startFlag = false;
 
             } else if (buttonText == "y√x") {
                 console.log(buttonText)
@@ -302,6 +336,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // display the calculation to the tracking display
                 calcTrackDisplay(calculation);
+                startFlag = false;
 
             } else if (buttonText == "10x") {
 
@@ -321,6 +356,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 mainCalcDisplay(buttonText);
                 calcTrackDisplay(calculation);
+                startFlag = false;
+
 
             } else if (buttonText == "Rad" || buttonText == "Deg") {
                 // used to remove rad / deg text from calculation
@@ -354,11 +391,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     calculation += buttonText;
                     // display the current calculation in the smaller display
                     calcTrackDisplay(calculation);
+                    startFlag = false;
+
                 } else {
                     // used to ensure numbers are increased in display instead of being wiped   
                     currentDisplay.value = currentDisplay.value + buttonText;
                     calculation += buttonText;
                     calcTrackDisplay(calculation);
+                    startFlag = false;
+
                 }
 
             }
