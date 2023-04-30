@@ -1,6 +1,8 @@
 /*
 FURTHER DEVELOPMENTS
 
+- 0 default
+
 - hovers in place on normal buttons but not on sci buttons
 - using bootstrap buttons but then overidden with Js, so obsolete code in places needs removing
 
@@ -167,6 +169,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     calcTrackDisplay(calculation);
                 }
 
+            } else if (buttonText=="ex") {
+            
+                console.log(buttonText);
+                buttonText = `e**`
+                //check if the last button was a number or not
+                // 10x is applied on its own
+ 
+                if ((isNaN(lastButton))) {
+                    console.log(lastButton);
+                    calculation += `${buttonText}`;;
+                    calcTrackDisplay(calculation)
+                    mainCalcDisplay(buttonText);
+
+                } else {
+                   // set the calculation to be the current result for the calculation
+                   calculation += `*${buttonText}`;
+                   calcTrackDisplay(calculation);
+                }
+            
+
             } else if (buttonText == "e") {
                 console.log(buttonText)
                 //check if the last button was a number or not   
@@ -283,14 +305,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 console.log(buttonText);
                 buttonText = `10^x?`
-                //check if the last button was a number or not   
+                //check if the last button was a number or not
+                // 10x is applied on its own
+ 
                 if ((isNaN(lastButton))) {
-                    // set the calculation to be the current result for the calculation * 10x
-                    calculation += `*10**`;
+                    calculation += `10**`;
 
                 } else {
-                    // 10x is applied on its own
-                    calculation += `10**`;
+                    // set the calculation to be the current result for the calculation * 10x
+
+                    calculation += `*10**`;
                 }
 
                 mainCalcDisplay(buttonText);
