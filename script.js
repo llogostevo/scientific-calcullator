@@ -3,6 +3,8 @@ FURTHER DEVELOPMENTS
 
 - 0 default
 
+- number issue where number needs to reset after certain buttons
+
 - hovers in place on normal buttons but not on sci buttons
 - using bootstrap buttons but then overidden with Js, so obsolete code in places needs removing
 
