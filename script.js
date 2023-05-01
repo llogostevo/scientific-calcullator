@@ -2,12 +2,8 @@
 FURTHER DEVELOPMENTS
 
 
-- number issue where number needs to reset after certain buttons
-
 - hovers in place on normal buttons but not on sci buttons
 - using bootstrap buttons but then overidden with Js, so obsolete code in places needs removing
-
-- Ans doesn't multiply when applied to another number without a digit, also digits afterwards are appending to ANS
 
 - CE button to be implemnted
 
@@ -173,12 +169,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 if ((isNaN(lastButton)) && lastButton != "Rnd") {
                     // put the random number into the calculation
                     calculation += `${String(random)}`;
-                    mainCalcDisplay(`${String(random)}`);
+                    mainCalcDisplay(`Rnd: ${String(random)}`);
                 } else {
                     // multiply the random number to the last value in the calculation
                     calculation += `*${String(random)}`;
-                    mainCalcDisplay(`*${String(random)}`)
-
+                    mainCalcDisplay(`Rnd: ${String(random)}`)
                 }
                 // display the calculation to the tracker
                 calcTrackDisplay(calculation);
@@ -201,6 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // set the calculation to be the current result for the calculation * by ln(number)
                     calculation += `*${currentButton}(`;
                     calcTrackDisplay(calculation);
+                    mainCalcDisplay(currentButton);
                 }
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
@@ -220,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
                    // set the calculation to be the current result for the calculation
                    calculation += `*${currentButton}`;
                    calcTrackDisplay(calculation);
-                   mainCalcDisplay("e**");
+                   mainCalcDisplay(currentButton);
 
                 }
                 // reset the start flag as now in the middle of a calculation
@@ -241,27 +237,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     // set the calculation to be the current result for the calculation
                     calculation += `*${currentButton}`;
                     calcTrackDisplay(calculation);
-                    mainCalcDisplay("e");
+                    mainCalcDisplay(currentButton);
                 }
 
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
             } else if (currentButton == "log") {
-                console.log(currentButton)
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     // if not a number just put log into equation
-                    console.log(lastButton);
                     calculation += `${currentButton}(`;
                     calcTrackDisplay(calculation)
                     mainCalcDisplay(currentButton);
                 } else {
-                    // if it is a number then multiply the current caclulation against log10(number)
-                    result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * by log10(number)
                     calculation += `*${currentButton}(`;
                     calcTrackDisplay(calculation);
+                    mainCalcDisplay(currentButton);
                 }
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
@@ -307,8 +300,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             } else if (currentButton == "x2") {
 
-                // THIS is NOT WORKING FOR 0
-                console.log(currentButton)
 
                 let lastNum = 0;
 
@@ -350,7 +341,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 console.log(startFlag);
                 if (startFlag){
-                    console.log("reset calc")
                     // reset the calculation to be nothing
                         //potentially not needed here, 
                         //but kept for time being to insure no inconsistency from other calculations
@@ -364,7 +354,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 //
                 if (calculation!="") {
-                    console.log("shouldn't do this")
                     //get the last integer
                    lastNum = findLastInteger(calculation)
                    calculation = removeLastInteger(calculation)
@@ -474,7 +463,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     // used to perform a multiply prior to another number being put into the calculator for the following buttons
-                    if ((lastButton == 'π') || (lastButton == 'Ans') || (lastButton == 'x!')  || (lastButton == 'e') || (lastButton == 'x2')){
+                    if ((lastButton == 'π') || (lastButton == 'Ans') || (lastButton == 'Rnd') || (lastButton == 'x!')  || (lastButton == 'e') || (lastButton == 'x2') ){
                         calculation += `*`;
                     }
 
@@ -716,7 +705,9 @@ document.addEventListener("DOMContentLoaded", function () {
             // e.g. to support 
         display.value = text
             .replace("Math.PI", "π")
-            .replace("Math.sqrt", "√");
+            .replace("Math.sqrt", "√")
+            .replace("EXP", "E");
+
         console.log(text)
     }
 
