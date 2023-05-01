@@ -2,6 +2,15 @@
 FURTHER DEVELOPMENTS
 
 - CE button to be implemnted
+ - create CE button, hide initially
+ - after a new calculation has been started then show CE and hide AC
+ - eventListener on CE, if CE is clicked
+  - if last button is NaN
+    - remove last button from calcuation
+
+- will need to correct the implementation of 
+    - Factorial so doesn't activate answer immediately
+    - other buttons that activate immediate answer into calculation
 
 - hovers in place on normal buttons but not on sci buttons
 - using bootstrap buttons but then overidden with Js, so obsolete code in places needs removing
