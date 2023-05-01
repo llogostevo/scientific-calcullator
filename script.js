@@ -40,23 +40,25 @@ document.addEventListener("DOMContentLoaded", function () {
     // startFlag used to highlight if at the beginning of a new calculation
     // potential to remove this on a refactor of code, placed in to solve bugs with default 0
     let startFlag = true;
-
+    
     // Listen for calculator button press
     // for each button listen to a press
     calculatorButtons.forEach(button => {
         // on a click event
         button.addEventListener('click', function (event) {
             // store the text content into the variable text
-            let buttonText = button.innerText;
+            let currentButton = button.innerText;
             // output the value to the screen display using function
-            buttonText = checkText(buttonText)
+            currentButton = checkText(currentButton)
 
             // create a variable to use as a result (IS THIS NEEDED?)
             // let result
 
 
             // Check for each of the current buttons being pressed
-            if (buttonText == "=" && (lastButton != "=" && lastButton != "AC")) {
+            if (currentButton == "=" && (lastButton != "=" && lastButton != "AC")) {
+                
+
                 // evaluate the current calculation and store in result
                 ans = evaluateCalculation(calculation);
                 //change the main calculator display to show the result of the calculation
@@ -69,13 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 // reset the start flag as new calculation to be started
                 startFlag = true;
                 // Check to see if last button was an = or AC so that screen starts again prir to a number input. 
-            } else if (buttonText == "=" && (lastButton == "=" || lastButton == "AC")) {
+            } else if (currentButton == "=" && (lastButton == "=" || lastButton == "AC")) {
                 mainCalcDisplay("");
                 calcTrackDisplay("");
                 calculation = "";
                 // reset the start flag as new calculation to be started
                 startFlag = true;
-            } else if (buttonText == "AC") {
+            } else if (currentButton == "AC") {
                 // reset the calculation to start again
                 calculation = "";
                 // reset the main calculator to display to be emtpy
@@ -84,56 +86,59 @@ document.addEventListener("DOMContentLoaded", function () {
                 calcTrackDisplay("AC");
                 // reset the start flag as new calculation to be started
                 startFlag = true;
-            } else if (buttonText == "Ans") {
-                buttonText = ans;
-                mainCalcDisplay(`Ans: ${buttonText}`);
-                calculation += buttonText
+            } else if (currentButton == "Ans") {
+                lastButton = "Ans";
+                mainCalcDisplay(`Ans: ${ans}`);
+                calculation += ans
                 calcTrackDisplay(calculation);
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == '√') {
+            } else if (currentButton == '√') {
                 // check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     console.log(lastButton);
-                    calculation += `${buttonText}(`;
+                    calculation += `${currentButton}(`;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay(`${buttonText}(`);
+                    mainCalcDisplay(`${currentButton}(`);
 
                 } else {
                     // if it is a number then multiply the current caclulation against the square root
                     console.log("display");
                     result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * square root
-                    calculation += `*${buttonText}(`;
+                    calculation += `*${currentButton}(`;
                     calcTrackDisplay(calculation);
-                    mainCalcDisplay(`${buttonText}(`);
+                    mainCalcDisplay(`${currentButton}(`);
                 }
 
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == 'π') {
+            } else if (currentButton == 'π') {
 
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     // if not a number just put Math.Pi into calcuation
                     console.log(lastButton);
-                    calculation += buttonText;
+                    calculation += currentButton;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
+                    mainCalcDisplay(currentButton);
                 } else {
                     // if it is a number then multiply the current caclulation against pi
                     result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * by pi
-                    calculation += `*${buttonText}`;
+                    calculation += `*${currentButton}`;
                     calcTrackDisplay(calculation);
+                    mainCalcDisplay(currentButton);
                 }
 
+                //used to identify if pi is last button pressed, and add an * before integers
+                checkPi = true;
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "x!") {
+            } else if (currentButton == "x!") {
                 let lastNum = 0;
                 if (startFlag) {
                     mainCalcDisplay(`${String(0)}!`);
@@ -157,12 +162,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "Inv") {
+            } else if (currentButton == "Inv") {
                 // just used for log purposes currently
                 console.log("Inverse Mode")
-                
+                currentButton = lastButton;
 
-            } else if (buttonText == "Rnd") {
+            } else if (currentButton == "Rnd") {
                 let random = Math.random();
                 // check if the last button was not a number or if it was a random number
                 if ((isNaN(lastButton)) && lastButton != "Rnd") {
@@ -181,105 +186,98 @@ document.addEventListener("DOMContentLoaded", function () {
                 startFlag = false;
 
 
-            } else if (buttonText == "ln") {
-                console.log(buttonText)
+            } else if (currentButton == "ln") {
+                console.log(currentButton)
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     // if not a number just put LN into equation
                     console.log(lastButton);
-                    calculation += `${buttonText}(`;
+                    calculation += `${currentButton}(`;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
+                    mainCalcDisplay(currentButton);
                 } else {
                     // if it is a number then multiply the current caclulation against ln(number)
                     result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * by ln(number)
-                    calculation += `*${buttonText}(`;
+                    calculation += `*${currentButton}(`;
                     calcTrackDisplay(calculation);
                 }
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText=="ex") {
+            } else if (currentButton=="ex") {
             
-                console.log(buttonText);
-                buttonText = `e**`
+                console.log(currentButton);
+                currentButton = `e**`
                 //check if the last button was a number or not
-                // 10x is applied on its own
- 
+                
                 if ((isNaN(lastButton))) {
                     console.log(lastButton);
-                    calculation += `${buttonText}`;;
+                    calculation += currentButton;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
-
-                } else {
+                    mainCalcDisplay(currentButton);
+                } else if (!(isNaN(lastButton))  ){
                    // set the calculation to be the current result for the calculation
-                   calculation += `*${buttonText}`;
+                   calculation += `*${currentButton}`;
                    calcTrackDisplay(calculation);
+                   mainCalcDisplay("e**");
+
                 }
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "e") {
-                console.log(buttonText)
+            } else if (currentButton == "e") {
+                console.log(currentButton)
                 //check if the last button was a number or not   
-                if ((isNaN(lastButton))) {
+                if ((isNaN(lastButton)) && (lastButton!="e")) {
                     // if not a number just put into calcuation
                     console.log(lastButton);
-                    calculation += buttonText;
+                    calculation += currentButton;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
+                    mainCalcDisplay(currentButton);
                 } else {
                     // if it is a number then multiply the current caclulation against 
-                    result = evaluateCalculation(calculation);
+                    // result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation
-                    calculation += `*${buttonText}`;
+                    calculation += `*${currentButton}`;
                     calcTrackDisplay(calculation);
+                    mainCalcDisplay("e");
                 }
 
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "log") {
-                console.log(buttonText)
+            } else if (currentButton == "log") {
+                console.log(currentButton)
                 //check if the last button was a number or not   
                 if ((isNaN(lastButton))) {
                     // if not a number just put log into equation
                     console.log(lastButton);
-                    calculation += `${buttonText}(`;
+                    calculation += `${currentButton}(`;
                     calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
+                    mainCalcDisplay(currentButton);
                 } else {
                     // if it is a number then multiply the current caclulation against log10(number)
                     result = evaluateCalculation(calculation);
                     // set the calculation to be the current result for the calculation * by log10(number)
-                    calculation += `*${buttonText}(`;
+                    calculation += `*${currentButton}(`;
                     calcTrackDisplay(calculation);
                 }
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "EXP") {
-                console.log(buttonText)
-                //check if the last button was a number or not   
-                if ((isNaN(lastButton))) {
-                    // if not a number just put EXP into equation
-                    console.log(lastButton);
-                    calculation += `${buttonText}(`;
-                    calcTrackDisplay(calculation)
-                    mainCalcDisplay(buttonText);
-                } else {
-                    // if it is a number then multiply the current caclulation against EXP(number)
-                    result = evaluateCalculation(calculation);
-                    // set the calculation to be the current result for the calculation * by EXP(number)
-                    calculation += `*${buttonText}(`;
+            } else if (currentButton == "EXP") {
+                // set the calculation to be the current result for the calculation
+                if (!(isNaN(lastButton)) ){
+                    calculation += `*${currentButton}`;
                     calcTrackDisplay(calculation);
+                    mainCalcDisplay("E");
                 }
+                
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
             
-            } else if (buttonText == "%") {
+            } else if (currentButton == "%") {
                 // set the lastNum variable to 0
                 let lastNum = 0;
                 //check the start flag to see if this is a default zero
@@ -307,10 +305,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 startFlag = false;
             
 
-            } else if (buttonText == "x2") {
+            } else if (currentButton == "x2") {
 
                 // THIS is NOT WORKING FOR 0
-                console.log(buttonText)
+                console.log(currentButton)
 
                 let lastNum = 0;
 
@@ -346,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "Xy") {
+            } else if (currentButton == "Xy") {
                 
                 let lastNum = 0;
 
@@ -384,19 +382,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "y√x") {
-                console.log(buttonText)
+            } else if (currentButton == "y√x") {
+                console.log(currentButton)
+                let lastNum =0;
 
+                if (startFlag) {
+                    // reset the calculation to be nothing
+                        //potentially not needed here, 
+                        //but kept for time being to insure no inconsistency from other calculations
+                        calculation = "0";
+                } else if ((isNaN(lastButton))) {
                 //check if the last button was a number or not   
-                if ((isNaN(lastButton))) {
-                    // remove the last non integer from calculation
+                    // remove the last non integer from calculation if it wasn't a number
                     calculation = removeLastNonInteger(calculation)
                 }
 
+                // value of x is the last integer in the calculation tracker
                 let x = findLastInteger(calculation);
                 calculation = removeLastInteger(calculation);
                 // display last integer as a sqaure
                 mainCalcDisplay(`y?√(${x}`);
+                // take input of y
                 calculation += `Math.pow(${x}, 1/`;
 
                 // display the calculation to the tracking display
@@ -404,10 +410,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
-            } else if (buttonText == "10x") {
+            } else if (currentButton == "10x") {
 
-                console.log(buttonText);
-                buttonText = `10^x?`
+                console.log(currentButton);
+                currentButton = `10^x?`
                 //check if the last button was a number or not
                 // 10x is applied on its own
  
@@ -420,16 +426,29 @@ document.addEventListener("DOMContentLoaded", function () {
                     calculation += `*10**`;
                 }
 
-                mainCalcDisplay(buttonText);
+                mainCalcDisplay(currentButton);
                 calcTrackDisplay(calculation);
                 // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
 
-            } else if (buttonText == "Rad" || buttonText == "Deg") {
+            } else if (currentButton == "Rad" || currentButton == "Deg") {
                 // used to remove rad / deg text from calculation
                 // set the current button text to match the last button for the next click event i.e remove rad/deg as the last button clicked
-                buttonText = lastButton;
+                currentButton = lastButton;
+
+            } else if ((currentButton=="+") || (currentButton=="-")  ){
+
+                if (startFlag) {
+                    // set the calculation to be 0 as default
+                        calculation = "0";
+                } 
+                
+                calculation+=currentButton;
+                mainCalcDisplay(currentButton);
+                calcTrackDisplay(calculation);
+                startFlag = false;
+
 
             } else {
                 // update the calculation variable with the button data entry
@@ -438,9 +457,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 // check if the calculator is displaying a number
                 let numCheck = Number(currentDisplay.value);
                 // check if the button pressed is a number
-                let keyCheck = Number(buttonText);
+                let keyCheck = Number(currentButton);
                 // boolean to check if number is entered or if the last button was an equals / AC to decide if the display is a continuation
-                if (((isNaN(numCheck) || isNaN(keyCheck)) && buttonText != ".") || (!(isNaN(buttonText)) && (lastButton == "=" || lastButton == "AC"))) {
+                if (((isNaN(numCheck) || isNaN(keyCheck)) && currentButton != ".") || (!(isNaN(currentButton)) && (lastButton == "=" || lastButton == "AC"))) {
                     // following will put the button pressed onto the cacluator display if the button was not a number
                     // if the button was a number but then previous value was an operator it will wipe screen and put new number
                     // if button pressed wasn't a number the screen will be wiped with the operator value in place
@@ -453,18 +472,28 @@ document.addEventListener("DOMContentLoaded", function () {
                         sin(math.unit(90, 'deg'))
                          */
                     }
+
+                    // used to perform a multiply prior to another number being put into the calculator for the following buttons
+                    if ((lastButton == 'π') || (lastButton == 'Ans') || (lastButton == 'x!')  || (lastButton == 'e') || (lastButton == 'x2')){
+                        calculation += `*`;
+                    }
+
+                   // join the current button text to the calculation
+                    calculation += currentButton;
                     // display the button pressed in the calculator
-                    mainCalcDisplay(buttonText);
-                    calculation += buttonText;
+                    mainCalcDisplay(currentButton);
+                    
                     // display the current calculation in the smaller display
                     calcTrackDisplay(calculation);
                     // reset the start flag as now in the middle of a calculation
                 startFlag = false;
 
                 } else {
+                    
+                    
                     // used to ensure numbers are increased in display instead of being wiped   
-                    currentDisplay.value = currentDisplay.value + buttonText;
-                    calculation += buttonText;
+                    currentDisplay.value = currentDisplay.value + currentButton;
+                    calculation += currentButton;
                     calcTrackDisplay(calculation);
                     // reset the start flag as now in the middle of a calculation
                 startFlag = false;
@@ -474,7 +503,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
 
-            lastButton = buttonText;
+            lastButton = currentButton;
 
         });
 
@@ -636,7 +665,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace("√", "Math.sqrt")
             .replace("log(", "Math.log10(") // order important to not impact ln
             .replace("ln(", "Math.log(")
-            .replace("EXP(", "Math.exp(")
+            .replace("EXP", "10**")
             .replace("sin(deg", "sin((Math.PI / 180)*") // order of these is important, sin/cos/tan will be replaced further down
             .replace("tan(deg", "tan((Math.PI / 180)*")
             .replace("cos(deg", "cos((Math.PI / 180)*")
@@ -682,7 +711,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         //   ************************************************
-        //   TESTING REQUIRED< ARE THESE NEEDED, NEED MORE?
+        // could use this to provide better output of the tracking display
+            // would require some work in refactoring process and maybe new functions
+            // e.g. to support 
         display.value = text
             .replace("Math.PI", "π")
             .replace("Math.sqrt", "√");
@@ -697,13 +728,19 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(text)
 
         if (text == 'x') {
+            if (startFlag==true){
+                // if x is the button pressed and its the start then 0 multiply following number
+                return '0*';
+            } else { 
             return '*';
+            }
         } else if (text == '÷') {
-            return '/';
-        // } else if (text == '%') {
-        //     return '*0.01';
-        // } else if (text == 'Xy') {
-        //     return '**';
+            if (startFlag==true){
+                // if ÷ is the button pressed and its the start then 0 ÷ following number
+                return '0/';
+            } else { 
+                return '/';
+            }
         } else if (text == 'cos') {
             return 'cos(';
         } else if (text == 'tan') {
