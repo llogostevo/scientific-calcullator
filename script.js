@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (currentButton == "Ans") {
 
 
-                if ((isNaN(lastButton))) {
+                if ((isNaN(lastButton)) && ((lastButton != "Rnd") && (lastButton!="Ans") && (lastButton!="e") && (lastButton!='π')&& (lastButton!='x!'))) {
                     calculation += `${ans}`;
                     calcTrackDisplay(calculation)
                     mainCalcDisplay(`Ans: ${ans}`);
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (currentButton == 'π') {
 
                 //check if the last button was a number or not   
-                if ((isNaN(lastButton)) &&(lastButton!= "Ans")) {
+                if ((isNaN(lastButton)) && ((lastButton != "Rnd") && (lastButton!="Ans") && (lastButton!="e") && (lastButton!='π') && (lastButton!='x!'))) {
                     // if not a number just put Math.Pi into calcuation
                     console.log(lastButton);
                     calculation += currentButton;
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (currentButton == "Rnd") {
                 let random = Math.random();
                 // check if the last button was not a number or if it was a random number
-                if ((isNaN(lastButton)) && lastButton != "Rnd") {
+                if ((isNaN(lastButton)) && ((lastButton != "Rnd") && (lastButton!="Ans") && (lastButton!="e") && (lastButton!='π') && (lastButton!='x!'))) {
                     // put the random number into the calculation
                     calculation += `${String(random)}`;
                     mainCalcDisplay(`Rnd: ${String(random)}`);
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (currentButton == "e") {
                 console.log(currentButton)
                 //check if the last button was a number or not   
-                if ((isNaN(lastButton)) && ((lastButton!="e") || (lastButton!= "Ans"))) {
+                if ((isNaN(lastButton)) && ((lastButton != "Rnd") && (lastButton!="Ans") && (lastButton!="e") && (lastButton!='π') && (lastButton!='x!'))) {
                     // if not a number just put into calcuation
                     console.log(lastButton);
                     calculation += currentButton;
@@ -660,7 +660,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function evaluateCalculation(calculation) {
         let result = 0;
         result = calculation
-            .replace("π", "Math.PI")
+            .replace(/π/g, "Math.PI")
             .replace("√", "Math.sqrt")
             .replace("log(", "Math.log10(") // order important to not impact ln
             .replace("ln(", "Math.log(")
@@ -671,7 +671,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace("sin-1(deg", "(180 / Math.PI)*sin-1(") // order of these is important, sin-1/cos-1/tan-1 will be replaced further down
             .replace("tan-1(deg", "(180 / Math.PI)*tan-1(")
             .replace("cos-1(deg", "(180 / Math.PI)*cos-1(")
-            .replace("e", "Math.E") // order important to not impact exp
+            .replace(/e/g, "Math.E") // order important to not impact exp
             .replace("sin(", "Math.sin(")
             .replace("tan(", "Math.tan(")
             .replace("cos(", "Math.cos(")
