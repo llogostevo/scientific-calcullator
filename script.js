@@ -1,7 +1,6 @@
 /*
 FURTHER DEVELOPMENTS
 
-- open bracket ( doesn't provide an automultiply next to it if not operator present
 - hovers in place on normal buttons but not on sci buttons
 - using bootstrap buttons but then overidden with Js, so obsolete code in places needs removing
 
